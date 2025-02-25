@@ -1,0 +1,25 @@
+@use "./variables.scss" as variables;
+
+#root { 
+  height: 100vh;
+  overflow: hidden;
+  background: black;
+  background: linear-gradient(#222, 
+    variables.$light-blood-color 600%
+  );
+}
+
+.textured-red-border {
+  height: 0.625rem;
+  border-image: repeating-linear-gradient(
+    45deg,
+    variables.$dark-blood-color,
+    variables.$light-blood-color 0.375rem,
+    variables.$dark-blood-color 0.3125rem,
+    variables.$light-blood-color 0.5625rem
+  ) 10;
+}
+
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
