@@ -9,7 +9,7 @@ export default function Logo() {
       <h1 className="mt-6 text-center text-6xl sm:text-8xl font-extrabold title-text">
         Tyche's Hand
       </h1>
-      <div className="mx-auto border-container">
+      <div className="mx-auto border-container" data-testid="border-container">
         <div className="border-t-8 textured-red-border">
         </div>
         <span className="text-4xl four-suits">

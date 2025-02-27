@@ -1,0 +1,15 @@
+@use "./variables.scss" as variables;
+
+
+@mixin fade-in($duration: 1.5s) {
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  animation: fade-in $duration ease-in-out forwards;
+}
