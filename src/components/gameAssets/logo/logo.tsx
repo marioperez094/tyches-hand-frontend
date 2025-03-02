@@ -1,7 +1,10 @@
+//External Imports
+import { ReactNode } from "react";
+
 //Stylesheets
 import "./logo.scss";
 
-export default function Logo() {
+export default function Logo(): ReactNode {
   console.log("render Logo");
   
   return (
@@ -10,7 +13,7 @@ export default function Logo() {
         Tyche's Hand
       </h1>
       <div className="mx-auto border-container" data-testid="border-container">
-        <div className="border-t-8 textured-red-border">
+        <div className="border-t-8 textured-border">
         </div>
         <span className="text-4xl four-suits">
           &#9829;

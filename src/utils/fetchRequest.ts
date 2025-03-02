@@ -1,7 +1,7 @@
 //Request functions
 export async function getRequest<T>(url: string): Promise<T> {
-  const baseURL: string = import.meta.env.VITE_BASE_URL;
-  const composedLink: string = `${ baseURL }${ url }`
+  const composedLink = composeLink(url);
+
   try {
     const headers: HeadersInit = jwtHeaders();
 
@@ -18,10 +18,12 @@ export async function getRequest<T>(url: string): Promise<T> {
 };
 
 export async function postRequest<T>(url:string, body: object): Promise<T> {
+  const composedLink = composeLink(url);
+
   try {
     const headers: HeadersInit = jwtHeaders();
 
-    const response = await fetch(url, {
+    const response = await fetch(composedLink, {
       method: "POST",
       credentials: "include",
       headers,
@@ -35,6 +37,10 @@ export async function postRequest<T>(url:string, body: object): Promise<T> {
 };
 
 //Helpers
+function composeLink(extendedURL: string): string {
+  const baseURL: string = import.meta.env.VITE_BASE_URL;
+  return `${ baseURL }${ extendedURL }`
+};
 
 function jwtHeaders(): HeadersInit {
   const headers: HeadersInit = {
@@ -52,12 +58,11 @@ function jwtHeaders(): HeadersInit {
 
 async function handleErrors(response: Response) {
   if (!response.ok) {
-    try { 
-      const errorData = await response.json();
-      throw new Error(extractMessage(errorData.error));
-    } catch {
-      throw new Error(response.statusText || "Unkown error.");
-    };
+    return response.json().then((errorData) => {
+      const message = extractMessage(errorData.error);
+
+      throw new Error(message);
+    });
   };
 
   return response.json();

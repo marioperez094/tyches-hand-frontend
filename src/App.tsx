@@ -1,56 +1,76 @@
 //External Imports
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router";
 
+//Context
+import { useLoading } from "./context/loading";
+
 //Components
+import LandingPage from "./pages/landingPage/landingPage";
+import ProtectedRoutes from "./pages/protectedRoutes";
+import LoadingScreen from "./components/gameAssets/loadingScreen/loadingScreen";
 
 //Functions
 import { getRequest } from "./utils/fetchRequest";
-import LandingPage from "./pages/landingPage/landingPage";
-
-interface AuthResponse {
-  authenticated: boolean;
-}
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
+  const { showLoading, startLoading } = useLoading();
 
-  console.log("render App")
-  console.log("isAuthenticated: " + isAuthenticated)
+  console.log("rendered App")
+  console.log("isAuthenticated: ", isAuthenticated)
 
-  function checkAuthentication() {
+  function checkAuthentication(): Function {
     //Variable to clear animation timeout
     let timeoutId: number;
 
     function delayForTitle(authenticated: boolean) {
-      const animationDelay = 1500; //Time it takes for title to appear
+      const animationDelay: number = 1250; //Time it takes for title to appear
 
       timeoutId = window.setTimeout(() => {
+        if (authenticated) startLoading();
+
         setIsAuthenticated(authenticated);
       }, animationDelay);
     };
 
-    getRequest<AuthResponse>('/api/v1/players/authenticated')
+    getRequest< { authenticated: boolean }>('/api/v1/players/authenticated')
       .then(data => delayForTitle(data.authenticated))
       .catch(error => { 
-        console.error("Authentication error: ", error.message)
+        console.error(`Authentication error: ${ error.message }`)
         delayForTitle(false) 
       });
     
+    //Function to be returned for cleanup
     return () => clearTimeout(timeoutId);
   };
 
+  function logout() {
+    console.log("logout")
+  }
+
   return(
     <>
+      { /* Global loading screen */ }
+      { showLoading && <LoadingScreen /> }
+
       <Routes>
         { isAuthenticated ? (
-          <div>Hi</div>
+          <>
+            <Route element={ <ProtectedRoutes isAuthenticated={ isAuthenticated } /> }>
+              <Route path="/dashboard" element={ <div className="text-white">Dashboard</div> }>
+              </Route>
+            </Route>
+
+            <Route path="*" element={ <Navigate to={"/dashboard"} replace /> } />
+          </>
         ) : (
           <>
             <Route path="/" element={
               <LandingPage
                 isAuthenticated={ isAuthenticated }
-                checkAuthentication={ checkAuthentication }
+                setIsAuthenticated={ setIsAuthenticated }
+                checkAuthentication={ checkAuthentication } 
               />
             }/>
         

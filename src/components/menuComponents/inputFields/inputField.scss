@@ -1,0 +1,25 @@
+@use "../../../styles/variables.scss" as variables;
+
+.text-field {
+  height: 2.5rem;
+  font-size: 1rem;
+  border: 0.125rem solid variables.$light-blood-color;
+  border-radius: 0.5rem;
+  background-color: variables.$dark-blood-color;
+  color: #FFFFFF;
+  padding: 0 0.625rem;
+  transition: all 0.3s ease;
+}
+
+.text-field:focus {
+  outline: none;
+  border-color: variables.$light-gold-color;
+  box-shadow: 0 0 0.5rem variables.$dark-gold-color;
+  background-color: variables.$light-blood-color;
+}
+
+.text-field::placeholder {
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+}

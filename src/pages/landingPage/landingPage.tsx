@@ -1,19 +1,23 @@
 //External Imports
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
 //Components
-import Logo from "../../components/logo/logo";
+import Logo from "../../components/gameAssets/logo/logo";
 
 //Stylesheets
 import "./landingPage.scss";
+import Login from "./login";
 
 export default function LandingPage({
   isAuthenticated,
-  checkAuthentication
+  setIsAuthenticated,
+  checkAuthentication,
 } : {
-  isAuthenticated: boolean | null;
+  isAuthenticated: null | boolean;
+  setIsAuthenticated: (value: null | boolean) => void;
   checkAuthentication: Function;
-}) {
+}): ReactNode {
+  
   console.log("render LandingPage")
 
   useEffect(() => {
@@ -30,7 +34,9 @@ export default function LandingPage({
 
       <main className={ `main-menu-container ${ isAuthenticated === false ? "visible" : "" }` }>
         { isAuthenticated === null && null }
-        { isAuthenticated === false && <div className="text-white">Hi</div>}
+        
+        { /* Only displays login after authentication returns false */}
+        { isAuthenticated === false && <Login setIsAuthenticated={ setIsAuthenticated } /> }
       </main>
     </div>
   )

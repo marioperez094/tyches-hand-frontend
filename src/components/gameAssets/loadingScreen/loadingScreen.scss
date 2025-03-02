@@ -1,0 +1,49 @@
+@use "../../../styles/animations" as animations;
+
+.loading-line-container, .height-container {
+  height: 2.5rem;
+
+  span {
+    font-size: 1.25rem;
+    display: inline-block;
+    margin: 0 0.125rem;
+  }
+}
+
+.loading-line-container {
+  opacity: 0;
+  @include animations.fade-in(8s);
+}
+
+.loading-text {
+  @include animations.float(5s);
+  & { 
+    animation-delay: var(--delay); 
+  }
+}
+
+// Glitch effect before disappearing
+.loading-text-exit {
+  position: relative;
+  @include animations.glitch-flicker(0.8s);
+}
+
+// Adds RGB color shift effect
+.loading-text-exit::before,
+.loading-text-exit::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #ff00ff;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.loading-text-exit::after {
+  color: #00ffff;
+  left: 0.125rem;
+  top: -0.125rem;
+}

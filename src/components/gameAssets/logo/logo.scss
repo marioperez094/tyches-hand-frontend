@@ -1,5 +1,5 @@
-@use "../../styles/variables" as variables;
-@use "../../styles/mixins" as mixins;
+@use "../../../styles/variables" as variables;
+@use "../../../styles/mixins" as mixins;
 
 #logo {
   .title-text {    
@@ -16,6 +16,11 @@
     margin-top: 0.625rem;
     width: fit-content;
     height: 6.25rem;
+  }
+
+  .textured-border {
+    height: 0.625rem;
+    @include mixins.border-with-red-texture
   }
 
   .four-suits {
