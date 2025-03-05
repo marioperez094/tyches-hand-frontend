@@ -1,5 +1,5 @@
 //External Imports
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 //Context
 import { useLoading } from "../../context/loading";
@@ -11,12 +11,12 @@ import Notification from "../../components/headers/notification/notification";
 
 //Functions
 import { postRequest } from "../../utils/fetchRequest";
+import { getRecaptchaToken, loadRecaptchaScript } from "../../utils/utils";
 
 interface LoginResponse {
   success: boolean;
   token: string;
 }
-
 
 export default function Login({ 
   setIsAuthenticated 
@@ -27,9 +27,16 @@ export default function Login({
   const [submitting, setSubmitting] = useState<null | "Guest" | "Sign Up" | "Log In">(null);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
-
   console.log("render Login")
   console.log("submitting: ", submitting)
+
+  useEffect(() => {
+    const cleanup = loadRecaptchaScript();
+
+    return () => {
+      cleanup();
+    };
+  }, []);
 
   //Login options 
   const userEntryOptions: { name: "Sign Up" | "Log In" }[] = [
@@ -37,20 +44,29 @@ export default function Login({
     { name: "Log In" }
   ];
 
-  function submitGuest(e: React.MouseEvent<HTMLButtonElement>): void {
+  async function submitGuest(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     if (e) e.preventDefault();
     setSubmitting("Guest");
 
-    const payload = {
-      player: { is_guest: true }
-    };
+    try {
+      const token = await getRecaptchaToken();
 
-    successfulLogin("", payload); 
+      const payload: {} = {
+        player: { is_guest: true },
+        recaptcha_token: token,
+      };
+
+      successfulLogin("/api/v1/players", payload);
+    } catch (error: any) {
+      setSubmitting(null);
+      console.error(`Recaptcha error: ${ error.message }`)
+    };
   };
 
   function successfulLogin(url: string, payload: object): void {
-    postRequest<LoginResponse>(`/api/v1/players${ url }`, payload)
+    postRequest<LoginResponse>(`${ url }`, payload)
       .then(data => {
+        console.log("This is: ", data)
         if (data.success) {
           localStorage.setItem('jwt', data.token);
           setIsAuthenticated(true);

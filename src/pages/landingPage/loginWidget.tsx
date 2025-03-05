@@ -36,7 +36,7 @@ export default function LoginWidget({
       player: formData
     };
 
-    successfulLogin("/login", payload);
+    successfulLogin("/api/v1/players/login", payload);
   };
 
   return(

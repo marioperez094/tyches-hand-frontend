@@ -1,6 +1,7 @@
 //Components
 import { ChangeEvent, FormEvent, ReactNode, useState } from "react"
 import Form from "../../components/menuComponents/form"
+import { getRecaptchaToken } from "../../utils/utils";
 
 export default function SignUpWidget({ 
   submitting,
@@ -27,24 +28,28 @@ export default function SignUpWidget({
     );
   };
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>): void {
+  async function submitForm(e: FormEvent<HTMLFormElement>): Promise<void> {
     if (e) e.preventDefault();
     setSubmitting("Sign Up");
 
-    submitForm();
-  };
+    try {
+      const token = await getRecaptchaToken();
+      
+      const payload: {} = {
+        player: formData,
+        recaptcha_token: token,
+      };
 
-  function submitForm(): void {
-    const payload: { player: {[key: string]: string} } = {
-      player: formData
-    };
-
-    successfulLogin("", payload);
+      successfulLogin("/api/v1/players", payload);
+    } catch (error: any) {
+      setSubmitting(null);
+      console.error(`Recaptcha error: ${ error.message }`);
+    }
   };
 
   return(
     <Form
-      submit={ handleSubmit }
+      submit={ submitForm }
       formData={ formData }
       change={ handleInputChange }
       submitting={ submitting === "Sign Up" }

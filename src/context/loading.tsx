@@ -1,8 +1,12 @@
 //External Imports
 import { useState, useContext, createContext, ReactNode, } from "react";
 
-//Types
-import { LoadingContextType } from "../utils/types";
+interface LoadingContextType {
+  isLoading: boolean;
+  showLoading: boolean;
+  startLoading: () => void;
+  stopLoading: (delay?: number) => void;
+};
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 

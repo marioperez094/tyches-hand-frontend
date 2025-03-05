@@ -8,6 +8,7 @@ import { useLoading } from "./context/loading";
 //Components
 import LandingPage from "./pages/landingPage/landingPage";
 import ProtectedRoutes from "./pages/protectedRoutes";
+import Dashboard from "./pages/dashboard/dashboard";
 import LoadingScreen from "./components/gameAssets/loadingScreen/loadingScreen";
 
 //Functions
@@ -34,7 +35,7 @@ export default function App() {
       }, animationDelay);
     };
 
-    getRequest< { authenticated: boolean }>('/api/v1/players/authenticated')
+    getRequest<{ authenticated: boolean }>('/api/v1/players/authenticated')
       .then(data => delayForTitle(data.authenticated))
       .catch(error => { 
         console.error(`Authentication error: ${ error.message }`)
@@ -58,7 +59,7 @@ export default function App() {
         { isAuthenticated ? (
           <>
             <Route element={ <ProtectedRoutes isAuthenticated={ isAuthenticated } /> }>
-              <Route path="/dashboard" element={ <div className="text-white">Dashboard</div> }>
+              <Route path="/dashboard" element={ <Dashboard logout={ logout } /> }>
               </Route>
             </Route>
 

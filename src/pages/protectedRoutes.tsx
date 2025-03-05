@@ -1,6 +1,9 @@
 //External Imports
 import { Outlet } from "react-router";
 
+//Context
+import { CardProvider } from "../context/card";
+
 export default function ProtectedRoutes({ 
   isAuthenticated 
 } : {
@@ -9,6 +12,8 @@ export default function ProtectedRoutes({
   console.log("render ProtectedRoutes")
 
   return isAuthenticated ? (
-    <Outlet />
+    <CardProvider>
+      <Outlet />
+    </CardProvider>
   ) : null;
 }

@@ -1,10 +1,10 @@
 //External Imports
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 
 //Components
 import SignUpWidget from "./signUpWidget"
-import Notification from "../../components/headers/notification/notification";
 import LoginWidget from "./loginWidget";
+import RecaptchaText from "./recaptchaText";
 
 export default function ActiveWidget({
   activeWidget,
@@ -21,6 +21,7 @@ export default function ActiveWidget({
   return(
     <>
       { getActiveWidget(activeWidget, submitting, setSubmitting, successfulLogin) }
+      { activeWidget !== "Options" && <RecaptchaText /> }
     </>
   )
 };
