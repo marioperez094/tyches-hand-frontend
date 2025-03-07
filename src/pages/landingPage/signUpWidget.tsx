@@ -1,6 +1,10 @@
-//Components
+//External Imports
 import { ChangeEvent, FormEvent, ReactNode, useState } from "react"
+
+//Components
 import Form from "../../components/menuComponents/form"
+
+//Functions
 import { getRecaptchaToken } from "../../utils/utils";
 
 export default function SignUpWidget({ 

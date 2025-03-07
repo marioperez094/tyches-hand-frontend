@@ -7,7 +7,6 @@ import "./buttons.scss";
 interface StandardButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: "button" | "submit" | "reset";
   action?: (event: MouseEvent<HTMLButtonElement>) => void;
-  inverse?: boolean;
   disabled?: boolean;
   children: React.ReactNode;
 }
@@ -15,7 +14,6 @@ interface StandardButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export default function StandardButton({
   buttonType = "button",
   action = () => {},
-  inverse = false,
   disabled = false,
   children,
   ...props
@@ -27,7 +25,7 @@ export default function StandardButton({
     <button
       type={ buttonType }
       onClick={ action }
-      className={ `text-white uppercase font-bold ${ inverse ? "inverse-button-colors" : "standard-button-colors" }` }
+      className="text-white uppercase font-bold standard-button"
       disabled={ disabled }
       { ...props }
     >

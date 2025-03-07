@@ -1,7 +1,21 @@
 //External Imports
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 
-export default function Dashboard({ logout } : { logout: Function }) {
+//Context
+import { usePlayer } from "../../context/player";
+import { useLoading } from "../../context/loading";
+import DashboardLayout from "./dashboardLayout";
+import { Outlet } from "react-router";
+
+//Stylesheets
+import "./dashboard.scss";
+
+export default function Dashboard({ logout } : { logout: () => void }) {
+  const { player, fetchPlayer } = usePlayer();
+  const { stopLoading, showLoading } = useLoading();
+
+  console.log("render Dashboard")
+
   const links: {
     [key: string]: { 
     name: string,
@@ -20,8 +34,27 @@ export default function Dashboard({ logout } : { logout: Function }) {
       component: (<div>Edit Tokens</div>)
     }
   };
+
+  useEffect(() => {
+    fetchPlayerInfo();
+  }, []);
+
+  async function fetchPlayerInfo() {
+    await fetchPlayer({ deck_stats: true, deck_cards: true, collection_cards: true });
+
+    stopLoading();
+  };
+
+  if (showLoading) return null;
   
-  return (
-    <div>Hi</div>
-  )
+  return player ? (
+    <div id="dashboard">
+      <DashboardLayout
+        logout={ logout }
+        links={ links }
+      >
+        <Outlet />
+      </DashboardLayout>
+    </div>
+  ) : null;
 };

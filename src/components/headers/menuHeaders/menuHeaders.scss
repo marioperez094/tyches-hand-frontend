@@ -1,0 +1,20 @@
+@use "../../../styles/variables" as variables;
+@use "../../../styles/mixins" as mixins;
+
+.header-container { 
+  height: 2.5rem;
+  width: fit-content;
+  background: radial-gradient(circle at left, variables.$dark-blood-color 80%, transparent);
+  color: variables.$light-gold-color;
+  @include mixins.border-with-gray-texture;
+  
+  h1 {
+    color: transparent;
+    background: linear-gradient(
+      variables.$dark-gold-color,
+      variables.$light-gold-color 50%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}

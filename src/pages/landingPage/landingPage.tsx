@@ -2,11 +2,11 @@
 import { ReactNode, useEffect } from "react";
 
 //Components
+import Login from "./login";
 import Logo from "../../components/gameAssets/logo/logo";
 
 //Stylesheets
 import "./landingPage.scss";
-import Login from "./login";
 
 export default function LandingPage({
   isAuthenticated,

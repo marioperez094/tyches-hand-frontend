@@ -1,84 +1,93 @@
-//External Imports
+// External Imports
 import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router";
 
-//Context
+// Context
 import { useLoading } from "./context/loading";
 
-//Components
+// Components
 import LandingPage from "./pages/landingPage/landingPage";
 import ProtectedRoutes from "./pages/protectedRoutes";
 import Dashboard from "./pages/dashboard/dashboard";
+import PlayerCollections from "./pages/dashboard/playerCollections/playerCollections";
 import LoadingScreen from "./components/gameAssets/loadingScreen/loadingScreen";
 
-//Functions
-import { getRequest } from "./utils/fetchRequest";
+// Functions
+import { deleteRequest, getRequest } from "./utils/fetchRequest";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const { showLoading, startLoading } = useLoading();
 
-  console.log("rendered App")
-  console.log("isAuthenticated: ", isAuthenticated)
+  console.log("rendered App");
+  console.log("isAuthenticated: ", isAuthenticated);
 
-  function checkAuthentication(): Function {
-    //Variable to clear animation timeout
-    let timeoutId: number;
+  //Function to check authentication
+  function checkAuthentication(): () => void {
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     function delayForTitle(authenticated: boolean) {
-      const animationDelay: number = 1250; //Time it takes for title to appear
+      const animationDelay: number = 1250; // Time it takes for title to appear
 
-      timeoutId = window.setTimeout(() => {
+      timeoutId = setTimeout(() => {
         if (authenticated) startLoading();
-
         setIsAuthenticated(authenticated);
       }, animationDelay);
-    };
+    }
 
-    getRequest<{ authenticated: boolean }>('/api/v1/players/authenticated')
-      .then(data => delayForTitle(data.authenticated))
-      .catch(error => { 
-        console.error(`Authentication error: ${ error.message }`)
-        delayForTitle(false) 
+    getRequest<{ authenticated: boolean }>("/api/v1/players/authenticated")
+      .then((data) => delayForTitle(data.authenticated))
+      .catch((error) => {
+        console.error(`Authentication error: ${error.message}`);
+        delayForTitle(false);
       });
-    
-    //Function to be returned for cleanup
-    return () => clearTimeout(timeoutId);
-  };
 
-  function logout() {
-    console.log("logout")
+    return () => clearTimeout(timeoutId);
   }
 
-  return(
+  //Logout function
+  function logout(): void {
+    deleteRequest<{ success: boolean }>("/api/v1/players/logout")
+      .then((data) => {
+        if (!data.success) return;
+        setIsAuthenticated(false);
+        localStorage.removeItem("jwt");
+      })
+      .catch((error) => console.log(error));
+  }
+
+  return (
     <>
-      { /* Global loading screen */ }
+      { /* Global Loading Screen */ }
       { showLoading && <LoadingScreen /> }
 
       <Routes>
         { isAuthenticated ? (
           <>
-            <Route element={ <ProtectedRoutes isAuthenticated={ isAuthenticated } /> }>
-              <Route path="/dashboard" element={ <Dashboard logout={ logout } /> }>
+            <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
+              <Route path="/dashboard" element={<Dashboard logout={ logout } />}>
+                <Route index element={<PlayerCollections />} />
               </Route>
             </Route>
 
-            <Route path="*" element={ <Navigate to={"/dashboard"} replace /> } />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </>
         ) : (
           <>
-            <Route path="/" element={
-              <LandingPage
-                isAuthenticated={ isAuthenticated }
-                setIsAuthenticated={ setIsAuthenticated }
-                checkAuthentication={ checkAuthentication } 
-              />
-            }/>
-        
-            <Route path="*" element={ <Navigate to="/" replace /> } /> 
+            <Route
+              path="/"
+              element={
+                <LandingPage
+                  isAuthenticated={isAuthenticated}
+                  setIsAuthenticated={setIsAuthenticated}
+                  checkAuthentication={checkAuthentication}
+                />
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}
       </Routes>
     </>
-  )
-};
+  );
+}

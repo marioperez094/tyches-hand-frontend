@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 
 //Context
 import { CardProvider } from "../context/card";
+import { PlayerProvider } from "../context/player";
 
 export default function ProtectedRoutes({ 
   isAuthenticated 
@@ -13,7 +14,9 @@ export default function ProtectedRoutes({
 
   return isAuthenticated ? (
     <CardProvider>
-      <Outlet />
+      <PlayerProvider>
+        <Outlet />
+      </PlayerProvider>
     </CardProvider>
   ) : null;
 }

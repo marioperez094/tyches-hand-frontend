@@ -2,8 +2,8 @@
 import { ReactNode, useState } from "react";
 
 //Components
-import StandardButton from "../../components/menuComponents/buttons/standardButton"
 import ActiveWidget from "./activeWidget";
+import StandardButton from "../../components/menuComponents/buttons/standardButton"
 
 export default function UserEntryWidget({
   options,

@@ -14,4 +14,9 @@ export interface PlayerType {
   is_guest: boolean;
   blood_pool: number;
   tutorial_finished: boolean;
+  deck: {};
 };
+
+export interface DeckStatsType {
+  name: string;
+}

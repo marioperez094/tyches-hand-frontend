@@ -1,0 +1,59 @@
+@use "../../styles/animations.scss" as animations;
+@use "../../styles/variables.scss" as variables;
+@use "../../styles//mixins.scss" as mixins;
+
+#dashboard {
+  transform: translateY(100vh);
+  @include animations.slide-up-bounce(1s);
+
+  //Navigational buttons
+  .header-buttons, .deck-buttons {
+    .standard-button, .link-button {
+      flex: wrap;
+      margin: 0 0.1875rem;
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  main {
+    height: 88vh;
+    @include mixins.border-with-gray-texture;
+  }
+
+  .child-button {
+    &:first-child, &:last-child {
+      background: linear-gradient(45deg, variables.$light-blood-color, variables.$dark-blood-color);
+      &:hover {
+        background: linear-gradient(45deg, variables.$light-gold-color, variables.$dark-gold-color);
+      }
+    }
+  }
+
+  .header-buttons {
+    .standard-button {
+      &:nth-child(2), &:nth-child(3) {
+        background-image: linear-gradient(45deg, variables.$light-gold-color, variables.$dark-gold-color);
+        &:hover {
+          background-image: linear-gradient(45deg, variables.$light-blood-color, variables.$dark-blood-color);
+        }
+      }
+    }
+
+    .standard-button, .link-button {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+   //Guest warning and form
+   .guest-message-container {
+    margin: 0 auto;
+    max-height: 13.75rem;
+    background-color: rgba(220, 38, 38, 0.2);
+
+    .standard-button, .disabled-button {
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem 0;
+    }
+  }
+}

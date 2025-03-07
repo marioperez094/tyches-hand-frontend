@@ -12,7 +12,7 @@ export async function getRequest<T>(url: string): Promise<T> {
     });
     return handleErrors(response);
   } catch (error) {
-    console.error(`Fetch error for ${url}:`, (error as Error).message);
+    console.error(`Fetch error for ${ url }:`, (error as Error).message);
     throw error;
   };
 };
@@ -28,10 +28,47 @@ export async function postRequest<T>(url:string, body: object): Promise<T> {
       credentials: "include",
       headers,
       body: JSON.stringify(body)
+    });
+    return handleErrors(response);
+  } catch (error) {
+    console.error(`Fetch error for ${ url }:`, (error as Error).message);
+    throw error;
+  };
+};
+
+export async function putRequest<T>(url: string, body: object): Promise<T> {
+  const composedLink = composeLink(url);
+
+  try {
+    const headers: HeadersInit = jwtHeaders();
+
+    const response = await fetch(composedLink, {
+      method: "PUT",
+      credentials: "include",
+      headers,
+      body: JSON.stringify(body)
+    });
+    return handleErrors(response);
+  } catch (error) {
+    console.error(`Fetch error for ${ url }:`, (error as Error).message);
+    throw error;
+  }
+};
+
+export async function deleteRequest<T>(url: string): Promise<T> {
+  const composedLink = composeLink(url);
+
+  try {
+    const headers: HeadersInit = jwtHeaders();
+
+    const response = await fetch(composedLink, {
+      method: "DELETE",
+      credentials: "include", 
+      headers,
     })
     return handleErrors(response);
   } catch (error) {
-    console.error(`Fetch error for ${url}:`, (error as Error).message);
+    console.error(`Fetch error for ${ url }:`, (error as Error).message);
     throw error;
   };
 };

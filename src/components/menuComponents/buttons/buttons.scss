@@ -1,6 +1,6 @@
 @use "../../../styles/variables" as variables;
 
-.standard-button-colors, .inverse-button-colors {
+.standard-button, .inverse-button {
   border: 0.125rem solid transparent;
   cursor: pointer;
   border-radius: 0.5rem;
@@ -8,7 +8,7 @@
   transition: all 0.3s ease;
 }
 
-.standard-button-colors {
+.standard-button {
   background: linear-gradient(45deg, variables.$light-blood-color, variables.$dark-blood-color);
 
   
@@ -18,7 +18,7 @@
 }
 
 
-.inverse-button-colors {
+.inverse-button {
   background: linear-gradient(45deg, variables.$light-gold-color, variables.$dark-gold-color);
 
   &:hover { 

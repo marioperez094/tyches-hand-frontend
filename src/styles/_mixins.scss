@@ -27,3 +27,13 @@
     variables.$light-blood-color 0.5625rem
   ) 10;
 }
+
+@mixin border-with-gray-texture {
+  border-image: repeating-linear-gradient(
+    45deg,
+    #4C4C4C,
+    #7A7A7A 0.375rem,
+    #4C4C4C 0.3125rem,
+    #7A7A7A 0.5625rem
+  ) 10;
+}

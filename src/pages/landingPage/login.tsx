@@ -5,8 +5,8 @@ import { ReactNode, useState, useEffect } from "react";
 import { useLoading } from "../../context/loading";
 
 //Components
-import StandardButton from "../../components/menuComponents/buttons/standardButton";
 import UserEntryWidget from "./userEntryWidget";
+import StandardButton from "../../components/menuComponents/buttons/standardButton";
 import Notification from "../../components/headers/notification/notification";
 
 //Functions
