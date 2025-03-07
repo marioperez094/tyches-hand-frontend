@@ -57,7 +57,7 @@
 }
 
 @mixin glitch-flicker($duration: 1s) {
-  animation: glitch-flicker 0.8s steps(2, start) infinite;
+  animation: glitch-flicker $duration steps(2, start) infinite;
   
   @keyframes glitch-flicker {
     0% {
@@ -91,8 +91,8 @@
   }
 }
 
-@mixin stack-animation {
-  animation: stack-animation 1s;
+@mixin stack-animation($duration: 1s) {
+  animation: stack-animation $duration ease forwards;
 
   @keyframes stack-animation {
     0% {

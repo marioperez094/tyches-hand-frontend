@@ -29,7 +29,7 @@
 
   .widget-container {
     transform: translateY(100vh);
-    animation-delay: 1.5s !important;
+    animation-delay: 0.75s !important;
     padding: 0 0.625rem;
     @include mixins.border-with-red-texture;
     @include animations.slide-up-bounce(0.5s);

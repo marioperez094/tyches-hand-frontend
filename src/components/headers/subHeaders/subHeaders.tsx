@@ -9,12 +9,12 @@ export default function SubHeaders({
   isHeading = false, 
 } : { 
   children: ReactNode;
-  isHeading: boolean; 
+  isHeading?: boolean; 
 }) {
   console.log("render SubHeaders")
   
   return(
-    <div className={ `mx-${ isHeading ? "5" : "10" } my-${ isHeading ? "5" : "3" }` }>
+    <div className={ `${ isHeading ? "mx-5 my-5" : "mx-10 my-3" }` }>
       <div className="w-full text-center player-stat border-b-4">
         <div className="text-white font-bold ">{ children }</div>
       </div>

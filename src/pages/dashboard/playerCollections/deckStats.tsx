@@ -4,48 +4,45 @@ import { useMemo } from "react";
 //Components
 import SubHeaders from "../../../components/headers/subHeaders/subHeaders";
 import HoverText from "../../../components/headers/hoverText/hoverText";
-
-//Define types for props
-interface CardStats {
-  [key: string]: number;
-}
+import { DeckStatsType } from "../../../utils/types";
 
 interface DeckStatsProps {
-  cardStats: CardStats;
+  cardStats: DeckStatsType | {};
 }
 
 export default function DeckStats({ cardStats }: DeckStatsProps) {
+  console.log('card stats: ', cardStats)
   const revealedDecks = useMemo(() => {
     return Object.entries(cardStats).filter(([_, stat]) => stat > 0);
   }, [cardStats]);
 
   console.log("render DeckStats");
 
-  // ✅ Ensure correct calculation of missing decks
+  //Ensure correct calculation of missing decks
   const missingDecks = Math.max(0, Object.keys(cardStats).length - 1 - revealedDecks.length);
 
   return (
     <>
-      {/* Only shows revealed decks */}
+      { /* Only shows revealed decks */ }
       {revealedDecks.map(([name, stat]) => (
-        <DeckType key={name} name={name} stat={stat} />
+        <DeckType key={ name } name={ name } stat={ stat } />
       ))}
 
-      {/* Renders missing decks as question marks */}
+      { /* Renders missing decks as question marks */ }
       {[...Array(missingDecks)].map((_, index) => (
-        <RedactedDeck key={index} />
+        <RedactedDeck key={ index } />
       ))}
     </>
   );
 }
 
-// ✅ Define props for `DeckType`
+//Define props for `DeckType`
 interface DeckTypeProps {
   name: string;
   stat: number;
 }
 
-// DeckType Component
+//DeckType Component
 function DeckType({ name, stat }: DeckTypeProps) {
   const descriptions: Record<string, string> = {
     Exhumed: "Cards ripped from a corpse's stiff grip. INCREASED BLOOD POOL WINNING WITH WINNING HAND",
@@ -60,24 +57,24 @@ function DeckType({ name, stat }: DeckTypeProps) {
   return (
     <li className="w-full flex flex-col justify-between deck-type-container">
       <SubHeaders isHeading={false}>
-        <HoverText name={name} description={descriptions[name] || ""} isFlipped={name === "Total"}>
-          <p className={`${name}-text`}>{name}: {stat}</p>
+        <HoverText name={ name } description={ descriptions[name] || "" } isFlipped={ name === "Total" }>
+          <p className={ `${ name }-text`}>{ name }: { stat }</p>
         </HoverText>
       </SubHeaders>
     </li>
   );
 }
 
-// ✅ RedactedDeck Component (No Props)
+//RedactedDeck Component (No Props)
 function RedactedDeck() {
   console.log("render redactedDeck");
 
   return (
     <li className="relative overflow-hidden redacted">
-      <SubHeaders isHeading={false}>
+      <SubHeaders isHeading={ false }>
         <div className="flex justify-center items-center h-full redacted-animation">
           {[...Array(4)].map((_, index) => (
-            <div key={index} className="question-mark">?</div>
+            <div key={ index } className="question-mark">?</div>
           ))}
         </div>
       </SubHeaders>

@@ -14,9 +14,16 @@ export interface PlayerType {
   is_guest: boolean;
   blood_pool: number;
   tutorial_finished: boolean;
-  deck: {};
+  deck?: DeckStatsType;
 };
 
 export interface DeckStatsType {
   name: string;
-}
+  Total: number;
+  Standard: number;
+  Exhumed: number;
+  Charred: number;
+  Fleshwoven: number;
+  Blessed: number;
+  Bloodstained: number;
+};

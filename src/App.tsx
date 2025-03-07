@@ -14,6 +14,7 @@ import LoadingScreen from "./components/gameAssets/loadingScreen/loadingScreen";
 
 // Functions
 import { deleteRequest, getRequest } from "./utils/fetchRequest";
+import DeckEditor from "./pages/dashboard/deckEditor/deckEditor";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -66,11 +67,12 @@ export default function App() {
           <>
             <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
               <Route path="/dashboard" element={<Dashboard logout={ logout } />}>
-                <Route index element={<PlayerCollections />} />
+                <Route index element={ <PlayerCollections /> } />
+                <Route path="edit-deck" element={ <DeckEditor /> } />
               </Route>
             </Route>
 
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={ <Navigate to="/dashboard" replace />} />
           </>
         ) : (
           <>
@@ -78,9 +80,9 @@ export default function App() {
               path="/"
               element={
                 <LandingPage
-                  isAuthenticated={isAuthenticated}
-                  setIsAuthenticated={setIsAuthenticated}
-                  checkAuthentication={checkAuthentication}
+                  isAuthenticated={ isAuthenticated }
+                  setIsAuthenticated={ setIsAuthenticated }
+                  checkAuthentication={ checkAuthentication }
                 />
               }
             />

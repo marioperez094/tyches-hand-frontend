@@ -1,3 +1,6 @@
+//Types
+import { CardType } from "./types";
+
 export function capitalizeFirstLetter(string: string): string {
   if (!string) return string;
 
@@ -47,3 +50,16 @@ export async function getRecaptchaToken() {
     });
   });
 };
+
+export function filterGivenCards(cards: CardType[], filters: Record<string, boolean>): CardType[] {
+  return cards.filter((card) => {
+    if (!filters[card.effect]) return false;
+    
+    const rank = typeof card.rank === "string" ? parseInt(card.rank) : card.rank;
+
+    if (filters["High cards"] && (isNaN(rank) || rank > 7)) return true;
+    if (filters["Low cards"] && rank <= 7) return true;
+
+    return false;
+  });
+}

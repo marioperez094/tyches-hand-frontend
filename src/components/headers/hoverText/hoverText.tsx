@@ -4,10 +4,10 @@ import { ReactNode } from "react";
 // Stylesheets
 import "./hoverText.scss";
 
-//Define props interface
 interface HoverTextProps {
   name?: string | null;
   description?: string | null;
+  effectDescription?: string[];
   isFlipped?: boolean;
   children: ReactNode;
 }
@@ -15,6 +15,7 @@ interface HoverTextProps {
 export default function HoverText({
   name = null,
   description = null,
+  effectDescription = [],
   isFlipped = false,
   children,
 }: HoverTextProps) {
@@ -27,7 +28,14 @@ export default function HoverText({
         <h3 className={ `${ isBorderVisible ? "" : "include-bottom-border" } text-center hover-name` }>
           { name }
         </h3>
-        {description && <p className="hover-description">{ description }</p>}
+        <ul className="hover-effects">
+          { effectDescription.map((effect, index) => (
+            <li key={ index } className="hover-effect-description">
+              { effect }
+            </li>
+          ))}
+        </ul>
+        { description && <p className="hover-description">{ description }</p> } 
       </div>
     </div>
   );

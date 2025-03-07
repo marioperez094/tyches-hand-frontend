@@ -9,19 +9,19 @@ import "./notification.scss";
 
 interface NotificationProps {
   message: string;
-  textColor?: "text-red-500" | "text-green-500"; 
+  className?: string; 
 }
 
 export default function Notification({
   message,
-  textColor = "text-red-500"
+  className = "text-red-500"
 } : NotificationProps
 ): ReactNode {
   console.log("render Notification");
   const capitalizedMessage = useMemo<string>(() => capitalizeFirstLetter(message), [message])
 
   return(
-    <div className={ `${ textColor } text-lg notification` }>
+    <div className={ `${ className } text-lg notification` }>
       <p className="text-center">
         { capitalizedMessage }
       </p>
