@@ -32,7 +32,7 @@
     animation-delay: 0.75s !important;
     padding: 0 0.625rem;
     @include mixins.border-with-red-texture;
-    @include animations.slide-up-bounce(0.5s);
+    @include animations.slide-up(0.5s);
 
     &::before{
       z-index: -1;
@@ -48,7 +48,7 @@
     }
   }
 
-  .standard-button {
+  .standard-button, .disabled-button {
     padding: 0.75rem 1.5rem;
     width: 100%;
     margin: 0.5rem 0;

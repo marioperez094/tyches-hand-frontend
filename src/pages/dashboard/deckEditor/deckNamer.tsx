@@ -63,7 +63,7 @@ function DeckName({ name, toggleEditMode }: DeckNameProps) {
   return (
     <SubHeaders isHeading>
       {name}
-      <ActionButton onClick={toggleEditMode}>Edit</ActionButton>
+      <ActionButton onClick={ toggleEditMode }>Edit</ActionButton>
     </SubHeaders>
   );
 }
@@ -94,7 +94,7 @@ interface ActionButtonProps {
 
 function ActionButton({ children, onClick, type = "button" }: ActionButtonProps) {
   return (
-    <button type={type} className="px-5 ml-5 rounded-lg bg-red-800 hover:bg-red-500" onClick={onClick}>
+    <button type={type} className="px-5 ml-5 text-white rounded-lg bg-red-800 hover:bg-red-500" onClick={onClick}>
       {children}
     </button>
   );

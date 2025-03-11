@@ -40,19 +40,25 @@
   }
 }
 
-@mixin slide-up-bounce($duration: 1s) {
-  animation: slide-up-bounce $duration ease-out forwards;
+@mixin slide-up($duration: 1s) {
+  animation: slide-up $duration ease-out forwards;
 
-  @keyframes slide-up-bounce {
+  @keyframes slide-up {
     0% {
       transform: translateY(100vh);
-    }
-    80% {
-      transform: translateY(-1.25rem);
     }
     100% {
       transform: translateY(0);
     }
+  }
+}
+
+@mixin flicker($duration: 1s) {
+  animation: flicker $duration infinite;
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 }
 

@@ -9,7 +9,7 @@
 .hover-box {
   top: 100%;
   left: 0;
-  width: 11.25rem;
+  width: 12rem;
   background-color: rgba(0, 0, 0, 0.8);
   color: #FFF;
   border-radius: 8px;
@@ -17,7 +17,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: none;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 99;
   transition: display 0.3s ease, transform 0.3s ease;
   
   .hover-name {
@@ -34,10 +34,6 @@
     font-size: 14px;
     margin: 0;
     line-height: 1.4;
-  }
-
-  .hover-effects {
-    margin-bottom: 1.5rem;
   }
 
   .hover-effect-description {

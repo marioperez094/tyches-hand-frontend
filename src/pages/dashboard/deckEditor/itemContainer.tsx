@@ -6,7 +6,7 @@ import SubHeaders from "../../../components/headers/subHeaders/subHeaders";
 import HoverText from "../../../components/headers/hoverText/hoverText";
 
 //Define props interface
-interface DeckContainerProps {
+interface ItemContainerProps {
   hoverText?: { description: string } | null;
   redText?: boolean | null;
   title: string;
@@ -18,7 +18,7 @@ export default function DeckContainer({
   redText = null,
   title,
   children,
-}: DeckContainerProps) {
+}: ItemContainerProps) {
   return (
     <section className="w-full card-drop px-5">
       <SubHeaders>

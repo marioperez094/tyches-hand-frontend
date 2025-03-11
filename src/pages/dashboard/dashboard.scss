@@ -4,24 +4,16 @@
 
 #dashboard {
   transform: translateY(100vh);
-  @include animations.slide-up-bounce(1s);
+  @include animations.slide-up(1s);
 
   //Navigational buttons
-  .header-buttons, .deck-buttons {
+  .header-buttons {
     .standard-button, .link-button {
       flex: wrap;
       margin: 0 0.1875rem;
       padding: 0.75rem 1rem;
     }
   }
-
-  #deck-editor {
-    .hover-box {
-      top: 0 !important;
-      left: 100% !important;
-    }
-  }
-
 
   main {
     height: 88vh;
@@ -54,7 +46,7 @@
   }
 
    //Guest warning and form
-   .guest-message-container {
+  .guest-message-container {
     margin: 0 auto;
     max-height: 13.75rem;
     background-color: rgba(220, 38, 38, 0.2);
@@ -72,7 +64,10 @@
   .Bloodstained-text, 
   .Charred-text, 
   .Exhumed-text, 
-  .Fleshwoven-text {
+  .Fleshwoven-text,
+  .Inscribed-text,
+  .Oathbound-text,
+  .Offering-text {
     @include animations.float(3s)
   }
 
@@ -80,7 +75,10 @@
   .Bloodstained-text, 
   .Charred-text, 
   .Exhumed-text, 
-  .Fleshwoven-text { 
+  .Fleshwoven-text,
+  .Inscribed-text,
+  .Oathbound-text,
+  .Offering-text { 
     color: transparent;
     font-size: 1.125rem;
     font-weight: bold;
@@ -147,8 +145,40 @@
     background-clip: text;
   }
 
-  .deck-type-container {
-    cursor: pointer;
+  .Inscribed-text {
+    background: repeating-linear-gradient(
+      45deg,
+      #757575,
+      #b0b0b0 0.375rem,
+      #757575 0.3125rem,
+      #b0b0b0 0.5625rem
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .Oathbound-text {
+    background: repeating-linear-gradient(
+      45deg,
+      #2b4f73,
+      #55a1c9 0.375rem,
+      #2b4f73 0.3125rem,
+      #55a1c9 0.5625rem
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .Offering-text {
+    background: repeating-linear-gradient(
+      45deg,
+      #5a1b70,
+      #b03fc6 0.375rem,
+      #5a1b70 0.3125rem,
+      #b03fc6 0.5625rem
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
   .redacted {
@@ -174,25 +204,6 @@
 
   .question-mark:nth-child(4) {
     animation-delay: 2.5s;
-  }
-  //Deck Editor
-  
-  .deck-buttons-container {
-    z-index: 2;
-  }
-
-  .deck-buttons {
-    background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 70%);
-    backdrop-filter: blur(0.5rem);
-  }
-  .deck-message-container {
-    height: 3rem;
-    width: 100%;
-  }
-
-  .text-green-500.notification, .text-red-500.notification {
-    @include animations.fade-out(1.5s);
-    animation-delay: 3s;
   }
 
   .filter-checkbox-container {
@@ -237,11 +248,9 @@
   }
 
   .overlap-cards {
-    opacity: 0;
     margin-left: -3.75rem;
     transition: z-index 0.3s ease;
     transform: translateX(3.125rem);
-    @include animations.stack-animation(0.05s);
   
     &:first-child {
       margin-left: 0;
@@ -274,10 +283,34 @@
 
     .card-inner {
       transform: translateY(20px);
+      opacity: 0.8;
       box-shadow: 0 0 10px variables.$light-gold-color;
     }
   }
 
+  .token-stack {
+    min-height: 100vh;
+  }
+
+  .selected-token {
+    .hover-box {
+      display: none;
+    }
+
+    .token {
+      opacity: 0.8;
+      transform: translateY(20px);
+      box-shadow: 0 0 10px variables.$dark-blood-color;
+    }
+  }
+
+  #deck-editor,
+  #token-editor {
+    .hover-box {
+      top: -20% !important;
+      left: 100% !important;
+    }
+  }
   
   @media (max-width: 62.5rem) {
     .card-stack {

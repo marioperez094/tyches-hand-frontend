@@ -13,7 +13,12 @@ interface DeckStatsProps {
 export default function DeckStats({ cardStats }: DeckStatsProps) {
   console.log('card stats: ', cardStats)
   const revealedDecks = useMemo(() => {
-    return Object.entries(cardStats).filter(([_, stat]) => stat > 0);
+    return Object.entries(cardStats)
+      .filter(([deckType, info]) => info > 0 || info.count > 0 )
+      .map(([deckType, info]) => ({
+        name: deckType,
+        info,
+      }))
   }, [cardStats]);
 
   console.log("render DeckStats");
@@ -24,41 +29,37 @@ export default function DeckStats({ cardStats }: DeckStatsProps) {
   return (
     <>
       { /* Only shows revealed decks */ }
-      {revealedDecks.map(([name, stat]) => (
-        <DeckType key={ name } name={ name } stat={ stat } />
+      { revealedDecks.map((stat) => (
+        <DeckType key={ stat.name } stat={ stat } />
       ))}
 
       { /* Renders missing decks as question marks */ }
-      {[...Array(missingDecks)].map((_, index) => (
+      { [...Array(missingDecks)].map((_, index) => (
         <RedactedDeck key={ index } />
       ))}
     </>
   );
 }
 
-//Define props for `DeckType`
 interface DeckTypeProps {
   name: string;
-  stat: number;
+  info: DeckStatsProps;
 }
 
 //DeckType Component
-function DeckType({ name, stat }: DeckTypeProps) {
-  const descriptions: Record<string, string> = {
-    Exhumed: "Cards ripped from a corpse's stiff grip. INCREASED BLOOD POOL WINNING WITH WINNING HAND",
-    Charred: "The embers on these cards can still cauterize wounds. REDUCES BLOOD LOSS.",
-    Fleshwoven: "These cards appear to have a leathery texture and an odd familiarity. GREATER BLOOD POOL WINNINGS IF THE HAND ENDS IN A PUSH.",
-    Blessed: "The cards are blinding, and sizzles to the touch. MULTIPLIES WAGER.",
-    Bloodstained: "The cards are matted together by blood, filling the room with their foul odor. DAIMON'S MINIMUM WAGER INCREASES.",
-  };
-
+function DeckType({ stat }: { stat: DeckTypeProps}) {
+  const { name, info } = stat;
+  const { count, description, effect_description } = info;
   console.log("render deckType");
-
   return (
     <li className="w-full flex flex-col justify-between deck-type-container">
-      <SubHeaders isHeading={false}>
-        <HoverText name={ name } description={ descriptions[name] || "" } isFlipped={ name === "Total" }>
-          <p className={ `${ name }-text`}>{ name }: { stat }</p>
+      <SubHeaders isHeading={ false }>
+        <HoverText 
+          description={ description || "" } 
+          effectDescription={ [ effect_description ] }
+          isFlipped={ name === "Total" }
+        >
+          <p className={ `${ name }-text`}>{ name }: { count || info }</p>
         </HoverText>
       </SubHeaders>
     </li>

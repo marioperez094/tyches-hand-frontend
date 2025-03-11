@@ -10,11 +10,12 @@ import LandingPage from "./pages/landingPage/landingPage";
 import ProtectedRoutes from "./pages/protectedRoutes";
 import Dashboard from "./pages/dashboard/dashboard";
 import PlayerCollections from "./pages/dashboard/playerCollections/playerCollections";
+import DeckEditor from "./pages/dashboard/deckEditor/deckEditor";
+import TokenEditor from "./pages/dashboard/tokenEditor/tokenEditor";
 import LoadingScreen from "./components/gameAssets/loadingScreen/loadingScreen";
 
 // Functions
 import { deleteRequest, getRequest } from "./utils/fetchRequest";
-import DeckEditor from "./pages/dashboard/deckEditor/deckEditor";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -69,6 +70,7 @@ export default function App() {
               <Route path="/dashboard" element={<Dashboard logout={ logout } />}>
                 <Route index element={ <PlayerCollections /> } />
                 <Route path="edit-deck" element={ <DeckEditor /> } />
+                <Route path="edit-tokens" element={ <TokenEditor /> } />
               </Route>
             </Route>
 

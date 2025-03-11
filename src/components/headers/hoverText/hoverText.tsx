@@ -28,14 +28,14 @@ export default function HoverText({
         <h3 className={ `${ isBorderVisible ? "" : "include-bottom-border" } text-center hover-name` }>
           { name }
         </h3>
+        { description && <p className="hover-description">{ description }</p> } 
         <ul className="hover-effects">
           { effectDescription.map((effect, index) => (
-            <li key={ index } className="hover-effect-description">
-              { effect }
+            <li key={ index } className="hover-effect-description py-2">
+              { effectDescription.length > 1 && `${ index + 1 }:` } { effect }
             </li>
           ))}
         </ul>
-        { description && <p className="hover-description">{ description }</p> } 
       </div>
     </div>
   );

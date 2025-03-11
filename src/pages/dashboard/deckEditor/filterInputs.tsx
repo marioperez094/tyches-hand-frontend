@@ -14,7 +14,7 @@ export default function FilterInputs({ filters, deckStats, filterCards }: Filter
   return (
     <div className="flex justify-between overflow-x-scroll filter-container">
       {Object.entries(filters).map(([filterName, value]) => {
-        if (deckStats[filterName] === 0) return null;
+        if (deckStats[filterName]?.count === 0) return null;
         
         return (
           <label 

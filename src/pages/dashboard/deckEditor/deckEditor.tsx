@@ -10,13 +10,14 @@ import StandardButton from "../../../components/menuComponents/buttons/standardB
 import Notification from "../../../components/headers/notification/notification";
 import CardStack from "./cardStack";
 import DeckNamer from "./deckNamer";
-import DeckContainer from "./deckContainer";
+import ItemContainer from "./itemContainer";
 import FilterInputs from "./filterInputs";
 
 //Functions 
 import { putRequest } from "../../../utils/fetchRequest";
 import { filterGivenCards } from "../../../utils/utils";
 import { useSelectItem } from "../../../utils/useSelectItem";
+import EditorButtons from "../../../components/menuComponents/editorButtons/editorButtons";
 
 export default function DeckEditor() {
   console.log("render deckEditor")
@@ -49,7 +50,7 @@ export default function DeckEditor() {
       const timer = setTimeout(() => setMessage(null), 5000);
       return () => clearTimeout(timer);
     }
-  }, [message])
+  }, [message]);
 
   function filterCards(e: MouseEvent<HTMLInputElement>) {
     const { name } = e.target
@@ -59,7 +60,13 @@ export default function DeckEditor() {
     }));
   };
 
-  function handleDeckTap(target) {
+  //Sepearte function to prevent cloning of cards
+  function clearDeckandSelectedItem() {
+    setSelectedItem(null);
+    clearDeck();
+  }
+
+  function handleDeckTap(target: string) {
     if (!selectedItem || target === source) return;
     const isMovingToCollection = target === "Collection";
 
@@ -68,7 +75,7 @@ export default function DeckEditor() {
     setSource(null);
   };
 
-  function submitDeck(e) {
+  function submitDeck(e: MouseEvent<HTMLButtonElement>) {
     if (e) e.preventDefault();
 
     const payload = { deck: { cards: deck }};
@@ -78,50 +85,25 @@ export default function DeckEditor() {
         console.log(data)
         if (data.success) return showMessage("Deck Saved!");
       })
-      .catch(error => setMessage(error.message))
+      .catch(error => setMessage(error.message));
   }
 
   return (
     <>
       { /* Deck editing buttons */ }
-      <div className="sticky top-0 deck-buttons-container overflow-x-scroll">
-        <div className="flex justify-center deck-buttons w-full">
-          <StandardButton
-            action={ submitDeck }
-          >
-            Save Deck
-          </StandardButton>
-          <StandardButton
-            action={ sortCardsByRank }
-          >
-            Sort Decks
-          </StandardButton>
-          <StandardButton
-            action={ clearDeck }
-          >
-            Clear Deck
-          </StandardButton>
-          <StandardButton
-            action={ () => fillDeck(filteredCollectionCards) }
-          >
-            Fill Deck
-          </StandardButton>
-        </div>
-        <div className="relative deck-message-container"> {/* Ensures space for Notification */}
-          { message &&
-            <Notification 
-              message={message} 
-              className={`absolute top-0 left-0 w-full ${ message === "Deck Saved!" ? "text-green-500" : "text-red-500" }`} 
-            />  
-          }
-        </div>
-
-        
-      </div>
+      <EditorButtons
+        message={ message }
+        buttons={[
+          { name: "Save Deck", action: submitDeck },
+          { name: "Sort Decks", action: sortCardsByRank },
+          { name: "Clear Deck", action: clearDeckandSelectedItem },
+          { name: "Fill Deck", action: () => fillDeck(filteredCollectionCards) }
+        ]}
+      />
 
       <section className="mx-auto my-3 sm:my-5 lg:my-10" id="deck-editor">
         <DeckNamer name={ player.deck.name } />
-        <DeckContainer
+        <ItemContainer
           title={ `Collection ${ filteredCollectionCards.length } / ${ collectionCards.length }` }
         >
           <FilterInputs filters={ filters } deckStats={ player.deck } filterCards={ filterCards } />
@@ -131,8 +113,8 @@ export default function DeckEditor() {
             handleDeckTap={ () => handleDeckTap("Collection") }
             handleCardTap={ (card) => handleItemTap(card, "Collection") }
           />
-        </DeckContainer>
-        <DeckContainer
+        </ItemContainer>
+        <ItemContainer
           title={ `Deck ${ deck.length } / 52` }
           redText={ deck.length !== 52 }
           hoverText={{
@@ -145,7 +127,7 @@ export default function DeckEditor() {
             handleDeckTap={ () => handleDeckTap("Deck") }
             handleCardTap={ (card) => handleItemTap(card, "Deck") }
           />
-        </DeckContainer>
+        </ItemContainer>
       </section>
     </>
   )

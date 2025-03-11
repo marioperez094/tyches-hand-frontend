@@ -1,0 +1,82 @@
+#slot-container {
+  .slot-group {
+    background: 
+      url('https://www.transparenttextures.com/patterns/leather.png'), 
+      rgba(0, 0, 0, 1);
+    padding: 15px;
+    border: 3px solid #5D4A3C;
+    border-radius: 10px;
+    position: relative;
+  }
+
+
+  .slot-title {
+    top: -5px;
+    left: 50%;
+    background: #1A0F07;
+    color: #E0D6C2;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .slot {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #5D4A3C;
+    border-radius: 8px;
+    margin: 8px 0;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    .token {
+      width: 50px;
+      height: 50px;
+
+      .rune {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .socket {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #3d281b, #1a0f07);
+    border: 2px solid #5D4A3c;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+  }
+
+  @media (max-width: 1000px) {
+    .slot-title { 
+      font-size: 10px;
+    }
+  }
+}
+
+#dashboard {
+  #slot-container {
+    .slot-group {
+      .hover-box {
+        top: -50% !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  #dashboard {
+    #slot-container {
+      .slot-group {
+        .hover-box {
+          top: -200% !important;
+        }
+      }
+    }
+  }
+  
+}

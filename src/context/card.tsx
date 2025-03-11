@@ -74,7 +74,7 @@ function CardProvider({ children }: { children: ReactNode }) {
     handleMoveCards(fillingCards, false);
   }
 
-  return (
+  return(
     <CardContext.Provider
       value={{
         deck,
@@ -87,10 +87,10 @@ function CardProvider({ children }: { children: ReactNode }) {
         setCollectionCards,
       }}
     >
-      {children}
+      { children }
     </CardContext.Provider>
-  );
-}
+  )
+};
 
 function useCard(): CardContextType {
   const context = useContext(CardContext);

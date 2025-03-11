@@ -1,0 +1,97 @@
+@use "../../../styles/animations" as animations;
+
+.token {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  .outer-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffcc00, #d4a017, #b8860b);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+  }
+  
+  .colored-layer {
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    border-radius: 50%;
+    background-color: #8B0000;
+    top: 7.5%;
+    left: 7.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  &.Utility {
+    .colored-layer {
+      background-color: #1B3A4B;
+    }
+  }
+  
+  .text-ring {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+  }
+  
+  .gold-text {
+    fill: gold;
+    font-size: 9px;
+    font-family: "Times New Roman", serif;
+    letter-spacing: 1px;
+  }
+  
+  .gold-separator {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    border: 3px solid #d4a017;
+    top: 25%;
+    left: 25%;
+  }
+  
+  .inner-core {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    top: 40%;
+    left: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .rune {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.9), 
+        0 0 20px rgba(255, 255, 255, 0.7), 
+        0 0 30px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 255, 255, 0.3);
+    
+    @include animations.flicker(10s);
+  }
+}
+
+@media (max-width: 1000px) {
+  .token {
+    width: 75px;
+    height: 75px;
+    
+    .rune {
+      font-size: 20px;
+    }
+  }
+
+}
