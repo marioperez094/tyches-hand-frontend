@@ -1,9 +1,6 @@
 // External Imports
 import { useMemo } from "react";
 
-// Components
-import HoverText from "../../headers/hoverText/hoverText";
-
 // Stylesheets
 import "./card.scss";
 
@@ -50,22 +47,20 @@ export default function Card({ card, isFlipped = false }: CardProps) {
   const displayRank = cardRankObject[rank as keyof typeof cardRankObject] || rank;
   const displaySuit = cardSuit[suit as keyof typeof cardSuit] || "";
   
-  return (
-    <HoverText name={ card.name } description={ card.description } effectDescription={[ card.effect_description ]} isFlipped={ isFlipped }>
-      <div className={`card-container ${ isBlackSuit ? "black" : "" }`}>
-        <div className={`card-inner ${ isFlipped ? "flipped" : "" }`}>
-          {/* Front (Face-Up) */}
-          <div className={`card-face card-front ${ effect }-card`}>
-            <FaceUpCard card={{ displayRank, displaySuit }} />
-          </div>
+  return(
+    <div className={`card-container ${ isBlackSuit ? "black" : "" }`}>
+      <div className={`card-inner ${ isFlipped ? "flipped" : "" }`}>
+        {/* Front (Face-Up) */}
+        <div className={`card-face card-front ${ effect }-card`}>
+          <FaceUpCard card={{ displayRank, displaySuit }} />
+        </div>
 
-          {/* Back (Face-Down) */}
-          <div className="card-face card-back">
-            <FaceDownCard />
-          </div>
+        {/* Back (Face-Down) */}
+        <div className="card-face card-back">
+          <FaceDownCard />
         </div>
       </div>
-    </HoverText>
+    </div>
   );
 }
 

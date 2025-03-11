@@ -1,0 +1,28 @@
+@use "../../../styles/animations" as animations;
+
+.editor-buttons-container {
+  z-index: 2;
+
+  .editor-buttons {
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 70%);
+    backdrop-filter: blur(0.5rem);
+
+    .standard-button, .link-button {
+      flex: wrap;
+      margin: 0 0.1875rem;
+      padding: 0.75rem 1rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .editor-message-container {
+    height: 3rem;
+    width: 100%;
+  }
+
+  .text-green-500.notification, .text-red-500.notification {
+    animation-delay: 3s !important;
+    @include animations.fade-out(2s);
+  }
+}

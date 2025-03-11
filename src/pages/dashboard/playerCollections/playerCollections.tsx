@@ -12,10 +12,11 @@ import { HealthBarWithName } from "../../../components/gameAssets/healthBar/heal
 
 //Types
 import { DeckStatsType, PlayerType } from "../../../utils/types";
+import SlotStats from "./slotStats";
 
 export default function PlayerCollections() {
   const { player } = usePlayer();
-  const { username, blood_pool, is_guest, deck } = player as PlayerType;
+  const { username, blood_pool, is_guest, deck, total_tokens } = player as PlayerType;
   const { name } = deck as DeckStatsType;
 
   return(
@@ -28,10 +29,15 @@ export default function PlayerCollections() {
           isPlayer
         />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 py-2">
+      <div className="flex w-full lg:grid lg:grid-cols-3 lg:gap-4 py-2 overflow-x-auto snap-x snap-mandatory">
         <PlayerStatSection>
           <CollectionDetails name={ name }>
             <DeckStats cardStats={ deck } />
+          </CollectionDetails>
+        </PlayerStatSection>
+        <PlayerStatSection>
+          <CollectionDetails name={ `Tokens: ${ total_tokens }` }>
+            <SlotStats />
           </CollectionDetails>
         </PlayerStatSection>
       </div>
@@ -40,7 +46,7 @@ export default function PlayerCollections() {
 };
 
 function PlayerStatSection({ children }: { children: ReactNode }) {
-  return <section className="mx-auto w-full player-info-container">{ children }</section>
+  return <section className="w-full flex lg:block flex-col flex-shrink-0 snap-center player-info-container">{ children }</section>
 };
 
 function CollectionDetails({ 
@@ -53,7 +59,7 @@ function CollectionDetails({
   return(
     <>
       <SubHeaders isHeading>{ name }</SubHeaders>
-      <ul className="grid grid-cols-2 md:block">
+      <ul className="grid grid-cols-1">
         { children }
       </ul>
     </>

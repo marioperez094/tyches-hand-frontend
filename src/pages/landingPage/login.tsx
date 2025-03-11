@@ -94,7 +94,6 @@ export default function Login({
         />
         <StandardButton
           action={ (e) => submitGuest(e) }
-          inverse= { submitting === "Guest" }
           disabled={ submitting === "Guest" }
         >
           { submitting === "Guest" ? "Creating Account..." : "Guest" }

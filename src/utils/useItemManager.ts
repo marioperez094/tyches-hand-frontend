@@ -2,15 +2,15 @@
 import { CardType } from "./types";
 
 interface MoveItemsResult {
-  updatedSource: CardType[];
-  updatedTarget: CardType[];
+  updatedSource: any[];
+  updatedTarget: any[];
 };
 
 export default function useItemManager() {
   function moveItems(
-    source: CardType[], 
-    target: CardType[], 
-    items: CardType[]
+    source: any[], 
+    target: any[], 
+    items: any[]
   ): MoveItemsResult {
     console.log(items)
     const updatedSource = source.filter((item) => !items.some((i) => i.id === item.id));

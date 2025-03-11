@@ -26,11 +26,11 @@ export default function Dashboard({ logout } : { logout: () => void }) {
       component: (<div>Player Stats</div>)
     },
     "/dashboard/edit-deck": {
-      name: "Edit Deck",
+      name: "Deck",
       component: (<div>Edit Deck</div>)
     },
     "/dashboard/edit-tokens": {
-      name: "Edit Tokens",
+      name: "Tokens",
       component: (<div>Edit Tokens</div>)
     }
   };
@@ -40,7 +40,7 @@ export default function Dashboard({ logout } : { logout: () => void }) {
   }, []);
 
   async function fetchPlayerInfo() {
-    await fetchPlayer({ deck_stats: true, deck_cards: true, collection_cards: true });
+    await fetchPlayer({ deck_stats: true, deck_cards: true, collection_cards: true, collection_tokens: true, slots: true });
 
     stopLoading();
   };

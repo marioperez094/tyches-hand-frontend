@@ -1,6 +1,6 @@
 // External Imports
 import { useState, useMemo, useRef, FocusEvent } from "react";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 
 // Stylesheets
 import "./hoverButtons.scss";
@@ -22,6 +22,7 @@ export default function HoverButtons({
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const hoverRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   const numButtons: number = buttonOptions.length;
 
@@ -50,6 +51,11 @@ export default function HoverButtons({
     [numButtons, arcAngle, radius]
   );
 
+  function handleNavigation(link: string) {
+    setIsOpen(false);
+    navigate(link);
+  }
+
   //Reverse button options for correct order
   const reversedButtonOptions = useMemo(() => [...buttonOptions].reverse(), [buttonOptions]);
 
@@ -75,12 +81,14 @@ export default function HoverButtons({
         <div className="relative hover-buttons">
           { reversedButtonOptions.map((currentButton, index) => {
             const { x, y } = buttons[index];
+            const action = () => {
+              if (currentButton.link) return handleNavigation(currentButton.link);
+              return currentButton.action()
+            }
 
-            return currentButton.link ? (
-              <LinkButton key={ index } link={ currentButton.link } name={ currentButton.name } x={ x } y={ y } />
-            ) : (
-              <ActionButton key={ index } name={ currentButton.name } action={ currentButton.action } x={ x } y={ y } />
-            );
+            return(
+              <ActionButton key={ index } name={ currentButton.name } action={ action } x={ x } y={ y } />
+            )   
           })}
         </div>
       )}
@@ -126,8 +134,7 @@ function ActionButton({
   y: number;
 }) {
   console.log("render hoverButtons");
-  console.log(name, action)
-
+  
   return (
     <button className="absolute rounded-full child-button" style={{ transform: `translate(${x}px, ${-y}px)` }} onClick={ action }>
       { name }

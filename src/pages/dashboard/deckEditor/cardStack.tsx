@@ -3,6 +3,7 @@ import { useMemo } from "react";
 
 // Components
 import Card from "../../../components/gameAssets/card/card";
+import HoverText from "../../../components/headers/hoverText/hoverText";
 
 // Types
 import { CardType } from "../../../utils/types";
@@ -33,7 +34,9 @@ export default function CardStack({
             onClick={ () => handleCardTap(card) }
             style={{ animationDelay: `${ index * 0.05 }s` }}
           >
-            <Card card={ card } />
+            <HoverText name={ card.name } description={ card.description } effectDescription={[ card.effect_description ]}>
+              <Card card={ card } />
+            </HoverText>
           </div>
         );
       }),

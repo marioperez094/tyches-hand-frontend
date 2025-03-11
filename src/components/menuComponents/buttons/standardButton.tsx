@@ -25,7 +25,7 @@ export default function StandardButton({
     <button
       type={ buttonType }
       onClick={ action }
-      className="text-white uppercase font-bold standard-button"
+      className={ `text-white uppercase font-bold ${ disabled ? "disabled-button" : "standard-button" } ` }
       disabled={ disabled }
       { ...props }
     >
