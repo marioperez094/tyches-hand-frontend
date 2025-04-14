@@ -3,10 +3,10 @@ import { ReactNode, useMemo } from "react";
 import { useLocation } from "react-router";
 
 // Components
-import HoverButtons from "../../components/menuComponents/hoverButtons/hoverButtons";
-import MenuHeaders from "../../components/headers/menuHeaders/menuHeaders";
-import StandardButton from "../../components/menuComponents/buttons/standardButton";
-import LinkButton from "../../components/menuComponents/buttons/linkButton";
+import HoverButtons from "@components/menuComponents/hoverButtons/hoverButtons";
+import MenuHeaders from "@components/headers/menuHeaders/menuHeaders";
+import StandardButton from "@components/menuComponents/buttons/standardButton";
+import LinkButton from "@components/menuComponents/buttons/linkButton";
 
 interface LinkItem {
   name: string;
@@ -16,7 +16,7 @@ interface LinkItem {
 
 interface DashboardLayoutProps {
   links: {
-    [key: string]: {
+    [link: string]: {
       name: string;
       component: ReactNode;
     };
@@ -29,7 +29,7 @@ export default function DashboardLayout({ links, logout, children }: DashboardLa
   const currentLocation: string = useLocation().pathname; // Retrieves current dashboard location
 
   //Retrieves the name of the current directory for the header
-  const title: string = useMemo(() => links[currentLocation]?.name || "Player Dashboard", [currentLocation, links[currentLocation]?.name]);
+  const title: string = useMemo(() => links[currentLocation]?.name || "Dashboard", [currentLocation, links[currentLocation]?.name]);
 
   //Dynamic buttons based on current location
   const buttons: LinkItem[] = useMemo(() => {
@@ -41,13 +41,10 @@ export default function DashboardLayout({ links, logout, children }: DashboardLa
       }));
 
     return [
-      { name: "Play" },
       ...filteredButtons,
       { name: "Log Out", action: logout },
     ];
   }, [currentLocation, links, logout]);
-
-  console.log("render DashboardLayout");
 
   return (
     <>

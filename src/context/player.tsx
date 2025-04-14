@@ -1,70 +1,85 @@
 //External Imports
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-//Context
-import { useCard } from "./card";
-import { useToken } from "./token";
-
-//Functions
-import { getRequest } from "../utils/fetchRequest";
 
 //Types
-import { CardType, PlayerType, SlotType, TokenType } from "../utils/types";
+export interface PlayerType {
+  username: string;
+  is_guest: boolean;
+  blood_pool: number;
+  tutorial_finished: boolean;
+  games_played: number;
+};
+
+type DeckInfo = {
+  count: number;
+  description: string;
+  effect_description: string;
+}
+
+export type DeckBreakdownType = {
+  [key:string]: DeckInfo;
+};
+
+export type GameStats = {
+  games_played: number;
+  hands_won: number;
+  hands_lost: number;
+  current_streak: number;
+  longest_win_streak: number;
+};
+
+export type SlotType = {
+  id: number;
+  slot_type: string;
+  token: null | {
+    id: number;
+    name: string;
+    rune: string;
+    description: string;
+  };
+};
+  
+type StatType = {
+  deck_breakdown: DeckBreakdownType | {};
+  game_stats: GameStats | {};
+  slots: SlotType[] | {};
+};
 
 interface PlayerContextType {
-  player: PlayerType | null;
-  fetchPlayer: (options?: FetchPlayerOptions) => void;
+  player: PlayerType;
+  stats: StatType | null;
+  setStatSummary: (playerSummary: PlayerType & StatType) => void;
 }
 
-interface FetchPlayerOptions {
-  deck_stats?: boolean;
-  deck_cards?: boolean;
-  collection_cards?: boolean;
-  collection_tokens?: boolean;
-  slots?: boolean;
-}
+const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
-const PlayerContext = createContext<PlayerContextType | null>(null);
+function PlayerProvider({ children }: { children: React.ReactNode }) {
+  const [player, setPlayer] = useState<PlayerType>({
+    username: "",
+    is_guest: false,
+    blood_pool: 5000,
+    tutorial_finished: false,
+    games_played: 0
+  });
 
-function PlayerProvider({ children }: { children: ReactNode }) {
-  const { setDeck, setCollectionCards } = useCard();
-  const { setSlots, setCollectionTokens } = useToken();
-  const [player, setPlayer] = useState<PlayerType | null>(null);
+  const [stats, setStats] = useState<StatType | null>(null)
 
-  console.log("render PlayerProvider");
-  console.log("player:", player);
+  function setStatSummary(playerSummary: PlayerType & StatType) {
+    const { deck_breakdown, game_stats, slots, ...player } = playerSummary
 
-  function fetchPlayer({
-    deck_stats = false,
-    deck_cards = false,
-    collection_cards = false,
-    collection_tokens = false,
-    slots = false,
-  }: FetchPlayerOptions = {}): void {
-    const queryParams = new URLSearchParams();
-    if (deck_stats) queryParams.append("deck_stats", "true");
-    if (deck_cards) queryParams.append("deck_cards", "true");
-    if (collection_cards) queryParams.append("collection_cards", "true");
-    if (collection_tokens) queryParams.append("collection_tokens", "true");
-    if (slots) queryParams.append("slots", "true");
+    //Deconstructs player summary to save between stats and player
+    setStats({
+      deck_breakdown: deck_breakdown,
+      game_stats: game_stats,
+      slots: slots
+    });
 
-    const url = `/api/v1/players/show?${queryParams.toString()}`;
-
-    getRequest<{ player: PlayerType & { deck_cards?: CardType[]; collection_cards?: CardType[]; slots?: SlotType[], collection_tokens?: TokenType[] } }>(url)
-      .then((data) => {
-        console.log(data);
-        const { deck_cards, collection_cards, slots, collection_tokens, ...playerStats } = data.player;
-        setPlayer(playerStats);
-        if (deck_cards) setDeck(deck_cards);
-        if (collection_cards) setCollectionCards(collection_cards);
-        if (slots) setSlots(slots);
-        if (collection_tokens) setCollectionTokens(collection_tokens);
-      })
-      .catch((error) => console.error(error.message));
-  }
+    setPlayer(player);
+  };
 
   return (
-    <PlayerContext.Provider value={{ player, fetchPlayer }}>
+    <PlayerContext.Provider value={{ player, stats, setStatSummary }}>
       {children}
     </PlayerContext.Provider>
   );

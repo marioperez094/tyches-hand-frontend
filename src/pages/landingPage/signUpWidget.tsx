@@ -2,18 +2,21 @@
 import { ChangeEvent, FormEvent, ReactNode, useState } from "react"
 
 //Components
-import Form from "../../components/menuComponents/form"
+import Form from "@components/menuComponents/form"
 
 //Functions
-import { getRecaptchaToken } from "../../utils/utils";
+import { getRecaptchaToken } from "@utils/utils";
+
+//Types
+import SubmittingType from "@pages/landingPage/login";
 
 export default function SignUpWidget({ 
   submitting,
   setSubmitting,
   successfulLogin,
 } : { 
-  submitting: null | "Guest" | "Sign Up" | "Log In";
-  setSubmitting: (value: null | "Guest" | "Sign Up" | "Log In") => void;
+  submitting: SubmittingType;
+  setSubmitting: (value: "" | "Guest" | "Sign Up" | "Log In") => void;
   successfulLogin: Function;
 }): ReactNode {
   const [formData, setFormData] = useState<{[key: string]: string}>({
@@ -21,9 +24,6 @@ export default function SignUpWidget({
     password: "",
     password_confirmation: "",
   });
-
-  console.log("render SignUpWidget")
-  console.log("form data: ", formData)
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
@@ -46,7 +46,7 @@ export default function SignUpWidget({
 
       successfulLogin("/api/v1/players", payload);
     } catch (error: any) {
-      setSubmitting(null);
+      setSubmitting("");
       console.error(`Recaptcha error: ${ error.message }`);
     }
   };

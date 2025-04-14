@@ -16,7 +16,6 @@ export default function Form({
   buttonText: string;
   submitting: boolean;
 }): ReactNode {
-  console.log("render Form")
 
   return(
     <form onSubmit={ submit } id="form">

@@ -21,10 +21,6 @@ function TokenProvider({ children } : { children: ReactNode }) {
   const [slots, setSlots] = useState<SlotType[]>([]);
   const [collectionTokens, setCollectionTokens] = useState<TokenType[]>([]);
 
-  console.log("render TokenContext");
-  console.log("collectionTokens: ", collectionTokens.length);
-  console.log("slots: ", slots)
-
   function handleMoveTokens(item: TokenType, target: string | number): void {
     const targetSlot = typeof target === "number" ? slots.find(slot => slot.id === target) : null;
     const currentSlot = slots.find(slot => slot.token?.id === item.id);

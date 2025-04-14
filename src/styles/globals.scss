@@ -2,11 +2,14 @@
 
 #root { 
   height: 100vh;
-  overflow: hidden;
+  //overflow: hidden;
   background: black;
-  background: linear-gradient(#222, 
-    variables.$light-blood-color 600%
-  );
+  //background: radial-gradient(
+    //circle at top right,
+    //#222 0%,
+    //variables.$dark-blood-color 100%,
+    //variables.$light-blood-color 200%
+  //);
 }
 
 .grecaptcha-badge {

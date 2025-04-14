@@ -7,13 +7,9 @@
 
   #logo {
     opacity: 0.1;
-    @include animations.fade-in(1.5s) 
+    @include animations.fade-in(1s);
   }
-
-  .shift-up {
-    transform: translateY(-3.125rem);
-  }
-
+  
   .main-menu-container {
     width: 32rem;
     height: 0;

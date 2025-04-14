@@ -1,12 +1,9 @@
-//External Imports
-import { MouseEvent, ButtonHTMLAttributes, ReactNode } from "react";
-
 //Stylesheets 
 import "./buttons.scss";
 
-interface StandardButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface StandardButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: "button" | "submit" | "reset";
-  action?: (event: MouseEvent<HTMLButtonElement>) => void;
+  action?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   children: React.ReactNode;
 }
@@ -18,8 +15,7 @@ export default function StandardButton({
   children,
   ...props
 
-}: StandardButtonProps): ReactNode {
-  console.log("render StandardButton")
+}: StandardButtonProps) {
   
   return(
     <button

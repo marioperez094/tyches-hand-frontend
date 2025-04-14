@@ -24,11 +24,7 @@ const CardContext = createContext<CardContextType | null>(null);
 function CardProvider({ children }: { children: ReactNode }) {
   const [deck, setDeck] = useState<CardType[]>([]);
   const [collectionCards, setCollectionCards] = useState<CardType[]>([]);
-
-  console.log("render cardContext");
-  console.log("deck:", deck.length);
-  console.log("collectionCards:", collectionCards.length);
-
+  
   const { moveItems, clearLoadout } = useItemManager();
 
   function handleMoveCards(items: CardType[], isMovingToCollections: boolean): void {

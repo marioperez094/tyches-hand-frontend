@@ -20,8 +20,6 @@ import { useSelectItem } from "../../../utils/useSelectItem";
 import EditorButtons from "../../../components/menuComponents/editorButtons/editorButtons";
 
 export default function DeckEditor() {
-  console.log("render deckEditor")
-
   const { player } = usePlayer();
   const { deck, collectionCards, handleMoveCards, sortCardsByRank, clearDeck, fillDeck } = useCard();
   const { selectedItem, setSelectedItem, source, setSource, handleItemTap } = useSelectItem();
@@ -36,8 +34,6 @@ export default function DeckEditor() {
     Bloodstained: true,
     Standard: true,
   });
-
-  console.log(message)
     
   const filteredCollectionCards = useMemo(() => filterGivenCards(collectionCards, filters), [collectionCards, filters]);
 
@@ -82,7 +78,6 @@ export default function DeckEditor() {
 
     putRequest<{ success: boolean }>("/api/v1/decks/update_cards", payload)
       .then(data => {
-        console.log(data)
         if (data.success) return showMessage("Deck Saved!");
       })
       .catch(error => setMessage(error.message));

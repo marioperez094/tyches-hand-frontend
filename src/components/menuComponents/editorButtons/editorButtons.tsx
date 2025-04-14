@@ -20,7 +20,6 @@ export default function EditorButtons({
   buttons: buttonProps[];
   message: string | null;
 }) {
-  console.log("message: ", message);
 
   const greenMessage = message === "Deck Saved!" || "Token Slots Saved";
   return(
@@ -28,6 +27,7 @@ export default function EditorButtons({
       <div className="flex justify-center editor-buttons w-full">
         { buttons.map(button => (
           <StandardButton
+            key={ button.name }
             action={ button.action }
           >
             { button.name }

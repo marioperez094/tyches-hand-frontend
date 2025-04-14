@@ -7,7 +7,6 @@ export default function LoadingLine({
   loadingLine: string;
   isLoading: boolean;
 }) {
-  console.log("render LoadingLine")
 
   return(
     <li

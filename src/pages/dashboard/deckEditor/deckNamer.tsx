@@ -14,7 +14,6 @@ interface DeckNamerProps {
 }
 
 export default function DeckNamer({ name }: DeckNamerProps) {
-  console.log("render deckNamer");
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [deckName, setDeckName] = useState<string>(name);

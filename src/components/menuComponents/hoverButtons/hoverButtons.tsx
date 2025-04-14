@@ -59,8 +59,6 @@ export default function HoverButtons({
   //Reverse button options for correct order
   const reversedButtonOptions = useMemo(() => [...buttonOptions].reverse(), [buttonOptions]);
 
-  console.log("render hoverButtons")
-
   return (
     <div 
       ref={ hoverRef } 
@@ -108,7 +106,6 @@ function LinkButton({
   x: number;
   y: number;
 }) {
-  console.log("render hoverButtons");
 
   return (
     <Link 
@@ -133,7 +130,6 @@ function ActionButton({
   x: number;
   y: number;
 }) {
-  console.log("render hoverButtons");
   
   return (
     <button className="absolute rounded-full child-button" style={{ transform: `translate(${x}px, ${-y}px)` }} onClick={ action }>

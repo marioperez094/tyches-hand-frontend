@@ -17,7 +17,6 @@ export default function Notification({
   className = "text-red-500"
 } : NotificationProps
 ): ReactNode {
-  console.log("render Notification");
   const capitalizedMessage = useMemo<string>(() => capitalizeFirstLetter(message), [message])
 
   return(

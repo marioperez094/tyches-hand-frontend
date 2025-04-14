@@ -24,8 +24,6 @@ export default function GuestMessage() {
     password_confirmation: "",
   });
 
-  console.log("render GuestMessage");
-
   function toggleMessage(): void {
     setIsVisible(prev => !prev);
     setErrorMessage("");

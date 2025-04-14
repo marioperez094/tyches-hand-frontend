@@ -57,6 +57,10 @@
     }
   }
 
+  .player-stat-username {
+    @include mixins.border-with-gray-texture;
+  }
+
   //Card Stat Text
   .Total-text,
   .Standard-text,
@@ -67,7 +71,12 @@
   .Fleshwoven-text,
   .Inscribed-text,
   .Oathbound-text,
-  .Offering-text {
+  .Offering-text, 
+  .games_played-text, 
+  .win_streak-text,
+  .longest_win_streak-text,
+  .total_hands_won-text,
+  .total_hands_lost-text {
     @include animations.float(3s)
   }
 

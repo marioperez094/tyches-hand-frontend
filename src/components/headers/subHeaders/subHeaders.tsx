@@ -11,7 +11,6 @@ export default function SubHeaders({
   children: ReactNode;
   isHeading?: boolean; 
 }) {
-  console.log("render SubHeaders")
   
   return(
     <div className={ `${ isHeading ? "mx-5 my-5" : "mx-10 my-3" }` }>

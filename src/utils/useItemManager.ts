@@ -12,7 +12,6 @@ export default function useItemManager() {
     target: any[], 
     items: any[]
   ): MoveItemsResult {
-    console.log(items)
     const updatedSource = source.filter((item) => !items.some((i) => i.id === item.id));
     const updatedTarget = [...items, ...target]
 

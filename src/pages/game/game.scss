@@ -1,0 +1,19 @@
+#eye {
+  width: 50px;
+  height: 50px;
+  background: white;
+  transform: rotate(45deg);
+  border-radius: 75% 0;
+  display: inherit !important;
+  overflow: hidden;
+}
+#eye:hover {
+  background-color: black !important;
+}
+.pupil {
+  width: 20px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
+  align-items: center;
+}

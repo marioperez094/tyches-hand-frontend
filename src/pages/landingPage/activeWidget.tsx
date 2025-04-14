@@ -1,26 +1,23 @@
-//External Imports
-import { ReactNode } from "react"
-
 //Components
-import SignUpWidget from "./signUpWidget"
 import LoginWidget from "./loginWidget";
+import SignUpWidget from "./signUpWidget";
 import RecaptchaText from "./recaptchaText";
 
 export default function ActiveWidget({
   activeWidget,
   submitting,
   setSubmitting,
-  successfulLogin,
+  successfulLogin
 } : {
   activeWidget: "Options" | "Sign Up" | "Log In";
-  submitting: null | "Guest" | "Sign Up" | "Log In";
+  submitting: "" | "Guest" | "Sign Up" | "Log In";
   setSubmitting: (value: null | "Guest" | "Sign Up" | "Log In") => void;
-  successfulLogin: Function;
-}): ReactNode {
-  
-  return(
+  successfulLogin: (url: string, payload: object) => void;
+}) {
+
+  return (
     <>
-      { getActiveWidget(activeWidget, submitting, setSubmitting, successfulLogin) }
+      { getActiveWidget(activeWidget, submitting, setSubmitting, successfulLogin ) }
       { activeWidget !== "Options" && <RecaptchaText /> }
     </>
   )
@@ -28,10 +25,10 @@ export default function ActiveWidget({
 
 function getActiveWidget(
   widget: "Options" | "Sign Up" | "Log In",
-  submitting: null | "Guest" | "Sign Up" | "Log In",
+  submitting: "" | "Guest" | "Sign Up" | "Log In",
   setSubmitting: (value: null | "Guest" | "Sign Up" | "Log In") => void,
   successfulLogin: Function
-): ReactNode {
+) {
   switch (widget) {
     case "Sign Up":
       return <SignUpWidget submitting={ submitting } setSubmitting={ setSubmitting } successfulLogin={ successfulLogin } />

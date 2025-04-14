@@ -1,17 +1,17 @@
 //External Imports
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 //Context
-import { CardProvider } from "../context/card";
-import { PlayerProvider } from "../context/player";
-import { TokenProvider } from "../context/token";
+import { CardProvider } from "@context/card";
+import { TokenProvider } from "@context/token";
+import { PlayerProvider } from "@context/player";
 
-export default function ProtectedRoutes({ 
-  isAuthenticated 
-} : {
+
+export default function ProtectedRoutes({
+  isAuthenticated,
+} : { 
   isAuthenticated: boolean;
 }) {
-  console.log("render ProtectedRoutes")
 
   return isAuthenticated ? (
     <CardProvider>
@@ -21,5 +21,5 @@ export default function ProtectedRoutes({
         </PlayerProvider>
       </TokenProvider>
     </CardProvider>
-  ) : null;
-}
+  ) : <Navigate to="/" replace />
+};

@@ -15,10 +15,6 @@ function LoadingProvider({ children }: { children: ReactNode }) {
   const [showLoading, setShowLoading] = useState<boolean>(false);
   let timeoutId: ReturnType<typeof setTimeout>;
 
-  console.log("render loadingContext");
-  console.log("isLoading:", isLoading);
-  console.log("showLoading:", showLoading);
-
   //Takes a boolean and an optional delay for length of ending animation
   function setLoadingState(state: boolean, delay?: number): void {
     setIsLoading(state);
@@ -27,8 +23,6 @@ function LoadingProvider({ children }: { children: ReactNode }) {
       setShowLoading(true);
       return;
     }
-
-    console.log("Delay:", delay);
 
     timeoutId = setTimeout(() => setShowLoading(false), delay ?? 2000);
   }

@@ -25,8 +25,6 @@ export default function InputField({
 }: InputFieldProps): ReactNode {
   const capitalizedLabel = useMemo(() => capitalizeFirstLetter(name) , [name]);
 
-  console.log("render InputField")
-
   return(
     <input
       id={ name }

@@ -5,7 +5,7 @@ import { useEffect, useState, MouseEvent } from "react";
 import TokenStack from "./tokenStack";
 import ItemContainer from "../deckEditor/itemContainer";
 import EditorButtons from "../../../components/menuComponents/editorButtons/editorButtons";
-import TokenSlots from "../../../components/gameAssets/tokenSlots/tokenSlots";
+import TokenSlots from "../../../components/gameAssets/tokenSlots/tokenSlots1";
 
 //Context
 import { useToken } from "../../../context/token";

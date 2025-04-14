@@ -93,7 +93,7 @@ function jwtHeaders(): HeadersInit {
   return headers;
 }
 
-async function handleErrors(response: Response) {
+async function handleErrors<T>(response: Response): Promise<T> {
   if (!response.ok) {
     return response.json().then((errorData) => {
       const message = extractMessage(errorData.error);
@@ -102,7 +102,7 @@ async function handleErrors(response: Response) {
     });
   };
 
-  return response.json();
+  return response.json() as T;
 };
 
 function extractMessage(error: unknown): string {

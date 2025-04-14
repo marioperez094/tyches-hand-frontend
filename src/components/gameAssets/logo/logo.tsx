@@ -5,7 +5,6 @@ import { ReactNode } from "react";
 import "./logo.scss";
 
 export default function Logo(): ReactNode {
-  console.log("render Logo");
   
   return (
     <header className="sm:mx-auto sm:w-full sm:max-w-4xl text-center" id="logo">

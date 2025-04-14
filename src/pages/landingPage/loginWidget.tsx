@@ -2,24 +2,24 @@
 import { useState, ReactNode, ChangeEvent, FormEvent } from "react";
 
 //Components
-import Form from "../../components/menuComponents/form";
+import Form from "@components/menuComponents/form";
+
+//Types
+import SubmittingType from "@pages/landingPage/login";
 
 export default function LoginWidget({ 
   submitting,
   setSubmitting,
   successfulLogin,
 } : { 
-  submitting: null | "Guest" | "Sign Up" | "Log In";
-  setSubmitting: (value: null | "Guest" | "Sign Up" | "Log In") => void;
+  submitting: SubmittingType;
+  setSubmitting: (value: SubmittingType) => void;
   successfulLogin: Function;
 }): ReactNode {
   const [formData, setFormData] = useState<{[key: string]: string}>({
     username: "",
     password: ""
   });
-  
-  console.log("render SignUpWidget")
-  console.log("form data: ", formData)
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;

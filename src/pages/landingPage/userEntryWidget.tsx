@@ -1,26 +1,26 @@
 //External Imports
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 //Components
 import ActiveWidget from "./activeWidget";
-import StandardButton from "../../components/menuComponents/buttons/standardButton"
+import StandardButton from "@components/menuComponents/buttons/standardButton";
+
+const userEntryOptions: { name: "Sign Up" | "Log In" }[] = [
+  { name: "Sign Up" },
+  { name: "Log In" }
+]
 
 export default function UserEntryWidget({
-  options,
   submitting,
   setSubmitting,
-  successfulLogin,  
-}: { 
-  options: { name: "Sign Up" | "Log In" }[];
-  submitting: null | "Guest" | "Sign Up" | "Log In";
-  setSubmitting: (value: null | "Guest" | "Sign Up" | "Log In") => void;
-  successfulLogin: Function;
-}): ReactNode {
+  successfulLogin, 
+} : {
+  submitting: "" | "Guest" | "Sign Up" | "Log In";
+  setSubmitting: (value: "" | "Guest" | "Sign Up" | "Log In") => void;
+  successfulLogin: (url: string, payload: object) => void;
+}) {
   const [activeWidget, setActiveWidget] = useState<"Options" | "Sign Up" | "Log In">("Options");
 
-  console.log("render UserEntryWidget")
-  console.log("ActiveWidget: ", activeWidget)
-  
   return(
     <>
       <ActiveWidget
@@ -29,16 +29,16 @@ export default function UserEntryWidget({
         setSubmitting={ setSubmitting }
         successfulLogin={ successfulLogin }
       />
-      { options.map(option => 
+      { userEntryOptions.map(option =>
         activeWidget !== option.name ?
           <StandardButton
             key={ option.name }
-            action={ () => setActiveWidget(option.name) }
+            action={ () => setActiveWidget( option.name )}
           >
             { option.name }
           </StandardButton>
-        : null
+          : null
       )}
     </>
   )
-};
+}

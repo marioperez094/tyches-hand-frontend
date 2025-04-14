@@ -1,48 +1,75 @@
 //External Imports
 import { ReactNode, useEffect } from "react"
+import { Outlet } from "react-router";
 
 //Context
-import { usePlayer } from "../../context/player";
-import { useLoading } from "../../context/loading";
+import { useLoading } from "@context/loading";
+import { PlayerType, usePlayer } from "@context/player";
+
+//Components
 import DashboardLayout from "./dashboardLayout";
-import { Outlet } from "react-router";
+
+//Functions
+import { deleteRequest, getRequest } from "../../utils/fetchRequest";
 
 //Stylesheets
 import "./dashboard.scss";
 
-export default function Dashboard({ logout } : { logout: () => void }) {
-  const { player, fetchPlayer } = usePlayer();
+
+const links: {
+  [link: string]: { 
+  name: string,
+  component: ReactNode
+}} = {
+  "/game": {
+    name: "Play",
+    component: null
+  },
+  "/dashboard":{
+    name: "Stats",
+    component: (<div>Player Stats</div>)
+  },
+  "/dashboard/edit-deck": {
+    name: "Deck",
+    component: (<div>Edit Deck</div>)
+  },
+  "/dashboard/edit-tokens": {
+    name: "Tokens",
+    component: (<div>Edit Tokens</div>)
+  }
+};
+
+export default function Dashboard({ 
+  setIsAuthenticated 
+} : { 
+  setIsAuthenticated: (value: boolean) => void;
+}) {
+  const { player, setStatSummary } = usePlayer();
   const { stopLoading, showLoading } = useLoading();
-
-  console.log("render Dashboard")
-
-  const links: {
-    [key: string]: { 
-    name: string,
-    component: ReactNode
-  }} = {
-    "/dashboard":{
-      name: "Stats",
-      component: (<div>Player Stats</div>)
-    },
-    "/dashboard/edit-deck": {
-      name: "Deck",
-      component: (<div>Edit Deck</div>)
-    },
-    "/dashboard/edit-tokens": {
-      name: "Tokens",
-      component: (<div>Edit Tokens</div>)
-    }
-  };
 
   useEffect(() => {
     fetchPlayerInfo();
   }, []);
 
   async function fetchPlayerInfo() {
-    await fetchPlayer({ deck_stats: true, deck_cards: true, collection_cards: true, collection_tokens: true, slots: true });
-
+    await getRequest<{ player: PlayerType }>("/api/v1/players/player_summary")
+      .then(data => {
+        setStatSummary(data.player);
+      })
+      .catch(error => {
+        console.error(`Fetch Player Error: ${ error.message }`)
+      })
     stopLoading();
+  };
+
+  function logout() {
+    deleteRequest<{ success: boolean }>("/api/v1/players/logout")
+      .then(data => {
+        if (!data.success) return;
+        setIsAuthenticated(false);
+        localStorage.removeItem("jwt");
+      })
+      .catch(error => console.error(error.message));
   };
 
   if (showLoading) return null;

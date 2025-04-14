@@ -5,11 +5,10 @@
   .title-text {    
     font-size: 6rem;
     color: transparent;
-    background: linear-gradient(variables.$light-blood-color 50%, variables.$dark-blood-color);
+    background: linear-gradient(variables.$light-blood-color 30%, variables.$shadow-blood);
     -webkit-background-clip: text;
     background-clip: text;
     padding-bottom: 1.25rem;
-
   } 
 
   .border-container {

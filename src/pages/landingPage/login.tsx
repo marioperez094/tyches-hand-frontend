@@ -1,48 +1,40 @@
 //External Imports
-import { ReactNode, useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 //Context
-import { useLoading } from "../../context/loading";
+import { useLoading } from "@context/loading";
 
 //Components
 import UserEntryWidget from "./userEntryWidget";
-import StandardButton from "../../components/menuComponents/buttons/standardButton";
-import Notification from "../../components/headers/notification/notification";
+import Notification from "@components/headers/notification/notification";
+import StandardButton from "@components/menuComponents/buttons/standardButton";
 
-//Functions
+//Function
 import { postRequest } from "../../utils/fetchRequest";
 import { getRecaptchaToken, loadRecaptchaScript } from "../../utils/utils";
 
 interface LoginResponse {
   success: boolean;
   token: string;
-}
+};
 
-export default function Login({ 
-  setIsAuthenticated 
-} : { 
-  setIsAuthenticated: (value: null | boolean) => void 
-}): ReactNode {
+type SubmittingType = "" | "Guest" | "Sign Up" | "Log In"
+
+export default function Login({
+  setIsAuthenticated
+} : {
+  setIsAuthenticated: (value: boolean) => void;
+}) {
+  const navigate = useNavigate();
   const { startLoading } = useLoading();
-  const [submitting, setSubmitting] = useState<null | "Guest" | "Sign Up" | "Log In">(null);
-  const [errorMessage, setErrorMessage] = useState<null | string>(null);
-
-  console.log("render Login")
-  console.log("submitting: ", submitting)
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [submitting, setSubmitting] = useState<SubmittingType>("");
 
   useEffect(() => {
     const cleanup = loadRecaptchaScript();
-
-    return () => {
-      cleanup();
-    };
+    return () => cleanup();
   }, []);
-
-  //Login options 
-  const userEntryOptions: { name: "Sign Up" | "Log In" }[] = [
-    { name: "Sign Up" },
-    { name: "Log In" }
-  ];
 
   async function submitGuest(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     if (e) e.preventDefault();
@@ -58,27 +50,33 @@ export default function Login({
 
       successfulLogin("/api/v1/players", payload);
     } catch (error: any) {
-      setSubmitting(null);
+      setSubmitting("");
+      setErrorMessage(error.message)
       console.error(`Recaptcha error: ${ error.message }`)
-    };
+    }
   };
 
   function successfulLogin(url: string, payload: object): void {
     postRequest<LoginResponse>(`${ url }`, payload)
       .then(data => {
-        console.log("This is: ", data)
         if (data.success) {
-          localStorage.setItem('jwt', data.token);
+          localStorage.setItem("jwt", data.token);
           setIsAuthenticated(true);
           startLoading();
-        }
+          redirection(url);
+        };
       })
       .catch(error => {
-        console.log(error) 
         setErrorMessage(error.message);
         console.error(`Guest Error: ${ error.message }`);
-        setSubmitting(null);
+        setSubmitting("");
       })
+  }
+
+  //Redirects to tutorial if it's a new account or to the dashboard if logging in
+  function redirection(url: string) {
+    const redirectTo = url === "/api/v1/players" ? "/game" : "/dashboard";
+    navigate(redirectTo, { replace: true });
   };
 
   return(
@@ -87,16 +85,16 @@ export default function Login({
         { errorMessage && <Notification message={ errorMessage } /> }
 
         <UserEntryWidget
-          options={ userEntryOptions }
           submitting={ submitting }
           setSubmitting={ setSubmitting }
           successfulLogin={ successfulLogin }
         />
         <StandardButton
-          action={ (e) => submitGuest(e) }
+          action={ (e: React.MouseEvent<HTMLButtonElement>) => submitGuest(e) }
+          buttonType="button"
           disabled={ submitting === "Guest" }
         >
-          { submitting === "Guest" ? "Creating Account..." : "Guest" }
+          { submitting === "Guest" ? "Creating Account..." : "Guest"}
         </StandardButton>
       </div>
     </div>
