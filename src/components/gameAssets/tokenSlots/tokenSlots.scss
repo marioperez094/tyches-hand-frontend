@@ -1,12 +1,30 @@
 #slot-container {
+  border-radius: 12px;
+  border: 2px solid #3F2A1d;
+  background: linear-gradient(145deg, #2e1c0f, #1a0d05);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+  max-width: 500px;
+  padding: 15px;
+  
   .slot-group {
-    background: 
-      url('https://www.transparenttextures.com/patterns/leather.png'), 
-      rgba(0, 0, 0, 1);
-    padding: 15px;
-    border: 3px solid #5D4A3C;
-    border-radius: 10px;
+    //background: 
+      //url('https://www.transparenttextures.com/patterns/leather.png'), 
+      //rgba(0, 0, 0, 1);
+    padding: 15px; 
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(80, 60, 40, 0.04) 0px,
+      rgba(80, 60, 40, 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    border-right: 3px solid #120a05;
+    box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.4);
     position: relative;
+  }
+
+  .slot-group:last-child {
+    border-right: none;
   }
 
 
@@ -24,10 +42,10 @@
   .slot {
     width: 50px;
     height: 50px;
-    border: 2px solid #5D4A3C;
+    //border: 2px solid #5D4A3C;
     border-radius: 8px;
-    margin: 8px 0;
-    background: rgba(0, 0, 0, 0.5);
+    margin: 8px 2px;
+    //background: rgba(0, 0, 0, 0.5);
     position: relative;
 
     .token {
@@ -44,11 +62,22 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #3d281b, #1a0f07);
-    border: 2px solid #5D4A3c;
+    background: radial-gradient(circle at 30% 30%, #2e1c0f, #1a0d05);
+    border: 2px solid #3f2a1d;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+    box-shadow:
+      inset 0 0 6px rgba(0, 0, 0, 0.7),
+      0 0 3px rgba(34, 22, 13, 0.5);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  
+    &:hover {
+      box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, 0.8),
+        0 0 6px rgba(139, 90, 60, 0.3);
+      transform: scale(1.05);
+    }
   }
 
   @media (max-width: 1000px) {

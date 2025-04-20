@@ -21,6 +21,8 @@ export default function TokenSlots({ slots, selectedToken, handleTokenTap, handl
       effect_description: "Tokens burn bright in this slot, but such strength can lead to destruction."
     }
   }
+
+  console.log("here")
   
   const groupedSlots = slots.reduce((acc, slot) => {
     acc[slot.slot_type] = acc[slot.slot_type] || [];
@@ -47,23 +49,12 @@ export default function TokenSlots({ slots, selectedToken, handleTokenTap, handl
 };
 
 function SlotGroup({ title, selectedToken = null, handleSlotTap, clickToken, description, effect_description, slots }: { title?: string; description: string; effect_description: string; slots: SlotType[]}) {
+  console.log("also here")
+
   return(
     <div 
       className="slot-group"
     >
-      { title &&
-        <div className="w-full flex justify-center">
-          <HoverText
-            name={ title }
-            description={ description }
-            effectDescription={ [effect_description] }
-          >
-            <h3 className="slot-title text-center">
-              { title }
-            </h3>
-          </HoverText>
-        </div>
-      }
       <div className="flex justify-center">
         { slots.map((slot) => {
           const { id, slot_type, token } = slot;
@@ -99,6 +90,19 @@ function SlotGroup({ title, selectedToken = null, handleSlotTap, clickToken, des
           )
         })}
       </div>
+      { title &&
+        <div className="w-full flex justify-center">
+          <HoverText
+            name={ title }
+            description={ description }
+            effectDescription={ [effect_description] }
+          >
+            <h3 className="slot-title text-center">
+              { title }
+            </h3>
+          </HoverText>
+        </div>
+      }
     </div>
   )
 };

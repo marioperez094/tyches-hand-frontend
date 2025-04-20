@@ -27,6 +27,19 @@
   }
 }
 
+@mixin fade-in-out($duration: 1s, $timing: ease-in-out) {
+  animation: fade-in-out $duration $timing;
+
+  @keyframes fade-in-out {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
 @mixin float($duration: 1s, $timing: ease-in-out, $infinite: infinite, $alternate: alternate) {
   animation: float $duration $timing $infinite $alternate;
   

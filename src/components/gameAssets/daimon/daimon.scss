@@ -1,0 +1,157 @@
+@use "@styles/animations" as animations;
+
+#eye {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  background: radial-gradient(
+    ellipse at 20% 20%, /* lighting coming slightly from above */
+    white 0%,         /* light gray center instead of pure white */
+    #94949b 60%,        /* deep smoky gray */
+    #5d5d6f 80%,        /* darker gray/navy edge */
+    #ffffff 100%        /* very dark bottom shading */
+  );
+  transform: rotate(45deg);
+  border-radius: 70% 0;
+  display: inherit !important;
+  overflow: hidden;
+  box-shadow:
+    inset 0 2px 6px rgba(255, 255, 255, 0.1), /* subtle top gloss */
+    inset 0 -4px 10px rgba(0, 0, 0, 0.6),     /* strong bottom shadow */
+    0 4px 10px rgba(0, 0, 0, 0.4); 
+
+  .pupil {
+    transform: rotate(-45deg);
+    width: 6rem;
+    height: 6rem;background: radial-gradient(
+      circle,
+      black 0%,
+      #D4AF37 50%,
+      rgba(255, 215, 0, 0.3) 75%,  /* soft glow gold */
+      rgba(0, 0, 0, 0) 100%         /* fully transparent at edge */
+    );
+    
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      inset 0 6px 12px rgba(120, 160, 255, 0.12),
+      inset 0 -2px 6px #D4AF37;
+    
+    transition: ease-in-out width;
+  }
+  
+  
+  .shine {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+
+  .rune {
+    position: absolute;
+    font-size: 80px;
+    opacity: 0;
+    font-weight: bold;
+    color: white;
+    top: 0%;
+    left: 28%;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.9), 
+        0 0 20px rgba(255, 255, 255, 0.7), 
+        0 0 30px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.float {
+  @include animations.float(2s);
+  transition: ease-in-out transform;
+}
+
+#eye::before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transform: rotate(-45deg) translate(0, -100%);
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 30%,
+    #252d3d 0%,
+    #151b2a 30%,
+    #0a0d16 70%,
+    #000000 100%
+  );
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+
+.blinking {
+  #eye::before {
+    animation: blinkingLid 1s;
+  }
+
+  animation: blink 1s;
+
+}
+
+.attacking {
+  #eye::before {
+    animation: blinkingLid 1s;
+  }
+
+  animation: blink 1s;
+
+  #eye {
+    .pupil {
+      animation: widen-pupil 1.7s;
+      animation-delay: 0.5s;
+    }
+
+    .rune {
+      @include animations.fade-in-out(1.5s);
+      animation-delay: 0.6s;
+    }
+  }
+}
+
+@keyframes blinkingLid {
+  0%, 90%, 100% {
+    transform: rotate(-45deg) translate(-0%, -100%);
+  }
+  45%, 50% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+
+  
+}
+
+@keyframes blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  48%, 49% {
+    transform: scaleY(0.8);
+  }
+}
+
+@keyframes widen-pupil {
+  0%, 80% {
+    width: 8rem;
+    height: 8rem;
+  }
+
+
+  100% {
+    width: 6rem;
+    height: 6rem;
+  }
+}

@@ -15,7 +15,7 @@ import { useSelectItem } from "../../../utils/useSelectItem";
 import { putRequest } from "../../../utils/fetchRequest";
 
 export default function TokenEditor() {
-  const { slots, collectionTokens, handleMoveTokens, clearSlots, sortTokensByEffect } = useToken();
+  const { collectionTokens, handleMoveTokens, clearSlots, sortTokensByEffect } = useToken();
   const { selectedItem, source, setSelectedItem, setSource, handleItemTap } = useSelectItem();
   const [message, setMessage] = useState<string | null>(null);
 
@@ -80,3 +80,37 @@ export default function TokenEditor() {
     </>
   )
 };
+
+const slots = [{
+  id: 1,
+  slot_type: "Inscribed",
+  token: {
+    id: 1,
+    name: 'Red Tearstone Token',
+    rune: 'O',
+    effect_type: "damage", 
+
+  }
+}, {
+  id: 2,
+  slot_type: "Oathbound",
+  token: {
+    id: 1,
+    name: 'Eye of Tyche',
+    rune: 'P',
+    effect_type: "Utility", 
+    
+  }
+}, {
+  id: 3,
+  slot_type: "Oathbound", 
+}, {
+  id: 4,
+  slot_type: "Offering"
+}, {
+  id: 5,
+  slot_type: "Offering"
+}, {
+  id: 6,
+  slot_type: "Offering"
+}]
