@@ -60,9 +60,9 @@ export default function Login({
     postRequest<LoginResponse>(`${ url }`, payload)
       .then(data => {
         if (data.success) {
+          startLoading();
           localStorage.setItem("jwt", data.token);
           setIsAuthenticated(true);
-          startLoading();
           redirection(url);
         };
       })

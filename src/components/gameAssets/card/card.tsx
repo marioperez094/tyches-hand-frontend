@@ -68,24 +68,15 @@ function FaceUpCard({ card }: FaceUpCardProps) {
   const { displayRank, displaySuit } = card;
 
   return (
-    <>
-      {/* Top Left Corner */}
-      <div className="card-header">
+    <div className="flex flex-col w-full">
+      <div className="flex w-full justify-between card-header">
         <div className="card-suit">{ displayRank }</div>
         <div className="card-rank">{ displaySuit }</div>
       </div>
-
-      {/* Center */}
-      <div className="flex justify-center items-center card-content">
+      <div className="flex w-full justify-center card-content">
         <div className="card-value">{ displayRank }</div>
       </div>
-
-      {/* Bottom Right Corner */}
-      <div className="card-footer text-right">
-        <div className="card-value">{ displayRank }</div>
-        <div className="card-suit">{ displaySuit }</div>
-      </div>
-    </>
+    </div>
   );
 }
 

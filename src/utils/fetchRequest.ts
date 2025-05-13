@@ -17,7 +17,7 @@ export async function getRequest<T>(url: string): Promise<T> {
   };
 };
 
-export async function postRequest<T>(url:string, body: object): Promise<T> {
+export async function postRequest<T>(url:string, body?: object): Promise<T> {
   const composedLink = composeLink(url);
 
   try {
@@ -36,7 +36,7 @@ export async function postRequest<T>(url:string, body: object): Promise<T> {
   };
 };
 
-export async function putRequest<T>(url: string, body: object): Promise<T> {
+export async function putRequest<T>(url: string, body?: object): Promise<T> {
   const composedLink = composeLink(url);
 
   try {

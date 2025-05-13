@@ -1,19 +1,21 @@
 @use "@styles/variables" as variables;
 
 .health-status-container {
+  color: variables.$main-font-color;
+
   .wooden-panel-container > .wooden-layer {
     width: 50dvw;
-    min-width: 200px;
+    min-width: 150px;
     max-width: 320px;
   }
   
   .heading-name {
-    background-color: #0A0608;
+    background-color: variables.$main-panel-color;
     border-radius: 6px;
     
     h2 {
-      color: variables.$main-colors;
-      font-size: clamp(1.5rem, 2.5dvw, 2rem);
+      font-size: clamp(15px, 2.5dvw, 25px);
+      text-shadow: 0 0 4px rgba(0,0,0,0.4);
     }
   }
   
@@ -24,7 +26,9 @@
     }
   
     .healthbar-inner-layer {
-      height: 25px;
+      height: 2dvw;
+      min-height: 15px;
+      max-height: 25px;
       overflow: hidden;
       background-color: #1C1B1C;
       z-index: 1;
@@ -43,7 +47,7 @@
           inset 0 1px 3px rgba(255, 246, 243, 0.3),
           inset 0 -2px 6px rgba(0, 0, 0, 0.5),
           0 0 6px rgba(180, 30, 30, 0.15);
-        transition: width 0.4s ease-in-out, background 0.5s ease;
+        transition: width 1s ease-in-out, background 1s ease;
         border-radius: 5px;
       }
   
@@ -57,8 +61,8 @@
         );
       }
   
-      .healthbar-text {
-        color: variables.$main-colors;
+      .healthbar-text { 
+        font-size: clamp(15px, 2dvw, 20px);
         top: 50%;
         left: 45%;
         transform: translate(-50%, -50%);

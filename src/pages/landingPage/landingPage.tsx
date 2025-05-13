@@ -36,7 +36,7 @@ export default function Landing({
     function handleRedirect() {
       timer = setTimeout(() => {
         startLoading();
-        navigate("/dashboard");
+        navigate("/game");
       }, animationDelay);
     };
 

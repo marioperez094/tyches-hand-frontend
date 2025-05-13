@@ -1,0 +1,84 @@
+@use "@styles/variables" as variables;
+@use "@styles/animations" as animations;
+
+#game-board {
+  width: 100%;
+  max-width: 1000px;
+  flex: 1;
+
+  .transition-opacity {
+    transition: opacity 0.5s ease;
+  }
+
+  .dialogue-container {
+    z-index: 2;
+    top: 45%;
+    left: 50%;
+    width: fit-content;
+    transform: translate(-50%, -50%);
+
+    .dialogue-box {
+      justify-content: center;
+    }
+  }
+
+  .player-health-status {
+    .health-status-container {
+      width: 100%;
+    }
+  }
+
+  .daimon-eye {
+    padding-top: 3dvh;
+    z-index: 2;
+  }
+
+  .game-buttons-container {
+    height: 64px;
+
+    .wooden-button {
+      width: 100%;
+      max-width: 250px;
+      justify-self: center;
+    }
+  }
+}
+
+.glow-gold, .glow-red {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(255, 215, 100, 0.3) 85%,
+      rgba(255, 200, 50, 0.5) 100%
+    );
+
+    @include animations.pulse-glow;
+    opacity: 0.5;
+  }
+}
+
+.glow-red {
+  &::before {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(180, 30, 30, 0.5) 85%,
+      rgba(180, 30, 30, 0.9) 100%
+    );
+  }
+
+  @include animations.quiver;
+}

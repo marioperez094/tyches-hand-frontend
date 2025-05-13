@@ -2,8 +2,8 @@
 @use "../../../styles/animations" as animations;
 
 .card-container {
-  width: 150px;
-  height: 220px;
+  width: 75px;
+  height: 120px;
   border-radius: 12px;
   perspective: 1000px;
   cursor: pointer;
@@ -39,7 +39,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  padding: 10px;
+  padding: 3px;
   backface-visibility: hidden;
   border-radius: 8px;
 }
@@ -101,17 +101,18 @@
 }
 
 .card-header .card-suit, .card-footer .card-suit {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .card-header, .card-footer {
   width: 100%;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   color: variables.$light-blood-color;
 }
 
 .card-content {
+  margin-top: -10px;
   font-size: 50px;
   color: variables.$light-blood-color;
 }
@@ -127,28 +128,4 @@
     variables.$dark-blood-color 5px,
     variables.$light-blood-color 9px
   );
-}
-
-/* Responsive Design for Smaller Screens */
-@media (max-width: 1000px) {
-  .card-container {
-    width: 75px;
-    height: 110px;
-  }
-
-  .card-face {
-    padding: 6px;
-  }
-
-  .card-header .card-suit, .card-footer .card-suit {
-    font-size: 10px;
-  }
-
-  .card-header, .card-footer {
-    font-size: 9px;
-  }
-  
-  .card-content {
-    font-size: 20px;
-  }
 }

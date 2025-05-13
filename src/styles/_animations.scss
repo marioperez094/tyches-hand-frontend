@@ -66,6 +66,22 @@
   }
 }
 
+
+@mixin fade-and-float($duration: 2s) {
+  animation: fade-and-float $duration ease forwards;
+
+  @keyframes fade-and-float {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+}
+
 @mixin flicker($duration: 1s) {
   animation: flicker $duration infinite;
 
@@ -120,7 +136,42 @@
     }
     100% {
       opacity: 1;
-      transform: translateX(0);
     }
   }
 }
+
+@mixin quiver($duration: 0.5s, $repetition: 2) {
+  animation: quiver $duration ease forwards $repetition;
+
+  
+  @keyframes quiver {
+    0%   { transform: translate(0, 0); }
+    10%  { transform: translate(-2px, 1px); }
+    20%  { transform: translate(2px, -1px); }
+    30%  { transform: translate(-1px, -2px); }
+    40%  { transform: translate(1px, 2px); }
+    50%  { transform: translate(-1px, 1px); }
+    60%  { transform: translate(1px, -1px); }
+    70%  { transform: translate(0, 2px); }
+    80%  { transform: translate(-2px, 0); }
+    90%  { transform: translate(1px, -2px); }
+    100% { transform: translate(0, 0); }
+  }
+}
+
+
+@mixin pulse-glow($duration: 1.6s) {
+  animation: pulse-glow $duration ease-in-out infinite;
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 0.65;
+    }
+  }
+}
+

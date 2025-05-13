@@ -1,0 +1,62 @@
+@use "@styles/variables" as variables;
+
+.orb {
+  width: 10dvw;
+  min-width: 50px;
+  max-width: 75px;
+  height: 10dvw;
+  min-height: 50px;
+  max-height: 75px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ddd;
+  position: relative;
+  overflow: hidden;  
+  color: variables.$main-font-color;
+  z-index: 1;
+
+
+  .shine {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 30%;
+    height: 30%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(5px);
+    transition: ease-in-out;
+    z-index: 2;
+  }
+
+  .wager-text {
+    position: absolute;
+    z-index: 1;
+    font-size: clamp(20px, 2.5dvw, 25px);
+    text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  }
+}
+
+.blood-fill {
+  position: absolute;
+  width: 500%;
+  height: 500%;
+  background: variables.$dark-blood-color;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 40%;
+}
+
+.animate-fill {
+  animation: fill 2s ease-in-out forwards;
+}
+
+@keyframes fill {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(300deg);
+  }
+}

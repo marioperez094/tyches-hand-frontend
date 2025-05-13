@@ -1,5 +1,9 @@
+//External Imports
+import { useState } from "react"
+
 //Components
 import WoodenPanel from "../panels/woodenPanel";
+import NumberTicker from "../wagerBottle/numberTicker";
 
 //Stylesheets
 import "./healthStatus.scss";
@@ -17,15 +21,18 @@ export default function HealthStatus({
 }) {
   const playerMaxHealth: number = maxHealth;
   const healthBarWidth: number = (health / playerMaxHealth) * 100;
+  const [value, setValue] = useState(health); 
 
   return(
     <div className="health-status-container">
       <WoodenPanel>
-        <div className="heading-name px-2">
-          <h2 className="text-center truncate">
-            { name }
-          </h2>
-        </div>
+        { !isPlayer &&
+          <div className="heading-name px-2">
+            <h2 className="text-center truncate">
+              { name }
+            </h2>
+          </div>
+        }
         <div className="healthbar-container">
           <WoodenPanel>
             <div className="relative healthbar-inner-layer">
@@ -33,7 +40,12 @@ export default function HealthStatus({
                 <div className={ `healthbar-fill ${ isPlayer && "player-health" }` } style={{ width: `${ healthBarWidth }%` }} />
                 { isPlayer &&
                   <div className="absolute w-full text-right text-sm font-extrabold healthbar-text">
-                    { health } / { maxHealth }
+                    <NumberTicker
+                      replacement={ health }
+                      duration={ 1000 } 
+                      value={ value } 
+                      setValue={ setValue } 
+                    /> / { maxHealth }
                   </div>
                 }
               </div>

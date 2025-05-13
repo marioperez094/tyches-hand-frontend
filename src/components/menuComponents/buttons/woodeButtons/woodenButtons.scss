@@ -1,0 +1,61 @@
+
+.wooden-button {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  /* WoodenPanel base style */
+  .button-inner-content {
+    display: flex;
+    padding: 0.5rem;
+    font-size: clamp(14px, 2.5dvw, 20px);
+    font-weight: bold;
+    color: #f0e6d2;
+    background: linear-gradient(
+      135deg,
+      #3a2017 0%,
+      #362010 25%,
+      #3d2119 50%,
+      #331e17 75%,
+      #3b261d 100%
+    );
+    border-radius: 0.5rem;
+    box-shadow:
+      inset 0 0 6px rgba(0, 0, 0, 0.6),
+      0 4px 6px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:hover .button-inner-content {
+    background: linear-gradient(
+      135deg,
+    #2f1912 0%,
+    #2a180e 25%,
+    #31190f 50%,
+    #26140f 75%,
+    #311910 100%
+    );
+    transform: scale(0.98);
+    box-shadow:
+      inset 0 0 10px rgba(0, 0, 0, 0.7),
+      0 2px 4px rgba(0, 0, 0, 0.5);
+
+  }
+
+  &:active .button-inner-content {
+    background: linear-gradient(
+      135deg,
+      #24100b 0%,
+      #1f0d08 50%,
+      #1a0a06 100%
+    );
+    transform: scale(0.96);
+    box-shadow:
+      inset 0 0 12px rgba(0, 0, 0, 0.8),
+      0 2px 3px rgba(0, 0, 0, 0.6);
+  }
+}

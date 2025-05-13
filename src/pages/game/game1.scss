@@ -1,0 +1,106 @@
+@use "@styles/variables" as variables;
+@use "@styles/animations" as animations;
+
+img {
+  opacity: 1;
+}
+
+#game-board {
+  max-width: 1000px;
+  width: 100%;
+  opacity: 1;
+  position: relative;
+
+  .dialogue-container {
+    z-index: 20;
+    position: absolute;
+    width: fit-content;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .dialogue-box {
+      justify-content: center;
+    }
+  }
+
+  .transition-opacity {
+    transition: opacity 0.5s ease;
+  }
+
+  .daimon-health-status {
+    padding-top: 2dvh;
+  }
+
+  .player-health-status {
+    padding: 0dvh ;
+  }
+
+  .daimon-eye {
+    padding-top: 3dvh;
+    z-index: 30;
+  }
+  
+  .player-menu {
+    .wager {
+      .wooden-button {
+        width: 50%;
+        max-width: 250px;
+      }
+    }
+    .wooden-button {
+      width: 100%;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+}
+
+.glow-gold, .glow-red {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(255, 215, 100, 0.3) 85%,
+      rgba(255, 200, 50, 0.5) 100%
+    );
+    
+    animation: pulse-glow 1.6s ease-in-out infinite;
+    opacity: 0.5;
+  }
+}
+
+.glow-red {
+  &::before {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(180, 30, 30, 0.5) 85%,
+      rgba(180, 30, 30, 0.9) 100%
+    );
+  }
+  @include animations.quiver;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.65;
+  }
+}

@@ -62,4 +62,4 @@ export function filterGivenCards(cards: CardType[], filters: Record<string, bool
 
     return false;
   });
-}
+};

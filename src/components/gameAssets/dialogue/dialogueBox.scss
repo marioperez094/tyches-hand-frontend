@@ -1,0 +1,24 @@
+@use "@styles/variables" as variables;
+@use "@styles/animations" as animations;
+
+.dialogue-box {
+  min-width: 320px;
+  .dark-seam {
+    .inner-content {
+      background-color: rgba(30, 30, 30, 0.85);
+      border-radius: 0.75rem;
+      font-size: clamp(14px, 2.5dvw, 20px);
+      background: variables.$main-panel-color;
+      color: variables.$main-font-color;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+
+      p {
+        padding: 0.5rem;
+        line-height: 1.6;
+        word-break: break-word;
+        margin: 0;
+        @include animations.fade-and-float(1s)
+      }
+    }
+  }
+}

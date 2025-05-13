@@ -1,15 +1,8 @@
 //External Imports
 import { createContext, useContext, useState } from "react";
 
-
 //Types
-export interface PlayerType {
-  username: string;
-  is_guest: boolean;
-  blood_pool: number;
-  tutorial_finished: boolean;
-  games_played: number;
-};
+import { PlayerType } from "../utils/types";
 
 type DeckInfo = {
   count: number;
@@ -47,22 +40,17 @@ type StatType = {
 };
 
 interface PlayerContextType {
-  player: PlayerType;
+  player: PlayerType | null;
   stats: StatType | null;
+  setPlayer: (player: PlayerType) => void;
   setStatSummary: (playerSummary: PlayerType & StatType) => void;
+  setPlayerHealth: (blood_pool: number) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 function PlayerProvider({ children }: { children: React.ReactNode }) {
-  const [player, setPlayer] = useState<PlayerType>({
-    username: "",
-    is_guest: false,
-    blood_pool: 5000,
-    tutorial_finished: false,
-    games_played: 0
-  });
-
+  const [player, setPlayer] = useState<PlayerType | null>(null);
   const [stats, setStats] = useState<StatType | null>(null)
 
   function setStatSummary(playerSummary: PlayerType & StatType) {
@@ -78,12 +66,29 @@ function PlayerProvider({ children }: { children: React.ReactNode }) {
     setPlayer(player);
   };
 
+  function setPlayerHealth(blood_pool: number) {
+    setPlayer(player => {
+      if (!player) return player;
+
+      return {
+        ...player,
+        blood_pool
+      }
+    });
+  };
+
   return (
-    <PlayerContext.Provider value={{ player, stats, setStatSummary }}>
+    <PlayerContext.Provider value={{ 
+      player, 
+      stats, 
+      setPlayer, 
+      setStatSummary,
+      setPlayerHealth 
+    }}>
       {children}
     </PlayerContext.Provider>
-  );
-}
+  )
+};
 
 function usePlayer(): PlayerContextType {
   const context = useContext(PlayerContext);
@@ -91,6 +96,6 @@ function usePlayer(): PlayerContextType {
     throw new Error("usePlayer must be used within a PlayerProvider");
   }
   return context;
-}
+};
 
 export { PlayerProvider, usePlayer };

@@ -13,6 +13,7 @@ const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 function LoadingProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showLoading, setShowLoading] = useState<boolean>(false);
+  
   let timeoutId: ReturnType<typeof setTimeout>;
 
   //Takes a boolean and an optional delay for length of ending animation

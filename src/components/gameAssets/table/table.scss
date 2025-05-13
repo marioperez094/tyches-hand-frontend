@@ -1,0 +1,132 @@
+@use "@styles/animations" as animations;
+
+
+.table-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  mask-image: radial-gradient(
+    ellipse 70% 150% at center bottom,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 150% at center bottom,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  
+  .table-surface {
+    flex-grow: 1;
+    height: 45dvh;
+    background: 
+      repeating-linear-gradient(
+        47deg,
+        rgba(255, 255, 255, 0.01) 0px,
+        rgba(255, 255, 255, 0.01) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      linear-gradient(
+        to top,
+        #134c32 0%,        /* dark forest green at bottom */
+        #0d3322 40%,       /* darker green */
+        #020d08 85%,       /* almost black */
+        black 100%         /* true black at top */
+      );
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(1.2) contrast(1.2);
+    mask-image: radial-gradient(
+      ellipse 70% 150% at center bottom,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 0.8) 40%,
+      rgba(0, 0, 0, 0.4) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 150% at center bottom,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 0.8) 40%,
+      rgba(0, 0, 0, 0.4) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+
+    box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.7); /* soft shadow at bottom edge */
+
+    .daimon-cards-stack, .player-cards-stack {
+      height: 30%;
+      width: fit-content;
+      position: relative;
+      transition: width 10s ease-in-out;
+
+      .overlap-cards {
+        position: relative; 
+        opacity: 1;
+        margin-left: calc(1dvw - 60px);
+        transition: z-index 0.3s ease;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:hover {
+          z-index: 2;
+        }
+      
+        .perspective-card {
+          transform: perspective(35px) rotateX(5deg);
+          transform-origin: bottom center;
+  
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:hover {
+            z-index: 1;
+            cursor: pointer;
+          }
+        }
+      }
+
+      
+      .discard-cards {
+        animation: stack-animation 1s ease reverse;
+      }
+    }
+
+    .daimon-cards-stack {
+      .overlap-cards .perspective-card {
+        transform: perspective(35px) rotateX(5deg) scale(0.8);
+      }
+    }
+  }
+
+  .discard-cards {
+    .slide {
+      animation: stack-animation 1s ease forwards reverse;
+    }
+  }
+
+  .table-edge {
+    background-repeat: repeat;
+    box-shadow:
+      inset 0 2px 4px rgba(255, 255, 255, 0.05),
+      0 -2px 6px rgba(0, 0, 0, 0.6),
+      0 4px 8px rgba(0, 0, 0, 0.5);
+  
+    mask-image: radial-gradient(
+      ellipse at center top,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse at center top,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}

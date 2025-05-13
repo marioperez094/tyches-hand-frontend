@@ -1,15 +1,20 @@
+//External Imports
+import { useEffect, useState } from "react";
+
 //Stylesheets
-import { useEffect, useMemo, useState } from "react";
 import "./daimon.scss";
 
 export default function Daimon({
   animation = "idle",
-  rune = "Ω"
+  effectType = "healing",
+  rune = "",
+  tychesWrath = false,
 }: {
   animation?: string;
+  effectType?: string;
   rune?: string;
+  tychesWrath?: boolean,
 }) {
-  console.log(animation)
   const [animationState, setAnimationState] = useState(animation);
 
   //Sets it if animation variable changes
@@ -28,7 +33,7 @@ export default function Daimon({
         setTimeout(() => {
           setAnimationState("idle");
         }, 1000);
-      }, Math.random() * 5000 + 5000);
+      }, Math.random() * 5000 + 10000);
     }
 
     return () => clearTimeout(blinkTimer);
@@ -36,8 +41,8 @@ export default function Daimon({
 
   return(
     <div className="float">
-      <div className={ `flex ${ animationState }` } >
-        <div className="flex justify-center items-center" id="eye">
+      <div className={ `flex ${ tychesWrath ? "tyches-wrath" : "" } ${ animationState }` } >
+        <div className={ `flex justify-center items-center ${ effectType }` } id="eye">
           <div className="pupil">
             <div className="shine" />
             { rune && 

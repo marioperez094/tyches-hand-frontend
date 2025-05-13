@@ -6,12 +6,12 @@ import { Routes, Route, Navigate } from "react-router";
 import { useLoading } from "@context/loading";
 
 //Components
-import Game from "@pages/game/game";
 import ProtectedRoutes from "@pages/protectedRoutes";
 import LandingPage from "@pages/landingPage/landingPage";
 import LoadingScreen from "@components/gameAssets/loadingScreen/loadingScreen";
 import TokenEditor from "./pages/dashboard/tokenEditor/tokenEditor";
 
+const GamePage = lazy(() => import("@pages/game/gamePage"))
 const Dashboard = lazy(() => import("@pages/dashboard/dashboard"));
 const PlayerCollections = lazy(() => import("@pages/dashboard/playerCollections/playerCollections"));
 
@@ -42,7 +42,7 @@ export default function App() {
             <Route index element={ <PlayerCollections /> } />
             <Route path="edit-tokens" element={ <TokenEditor /> } />
           </Route>
-          <Route path="/game" element={ <Game /> } />
+          <Route path="/game" element={ <GamePage /> } />
         </Route>
          
         {/* Fallback Route */}
